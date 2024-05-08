@@ -15,5 +15,6 @@ namespace Domain.Entities
             this.Password = Password;
             this.IsClient = false;
         }
+
     }
 }
