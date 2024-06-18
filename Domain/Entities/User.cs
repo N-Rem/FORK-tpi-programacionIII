@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//comando Update-Database
+// Add_Migration AddXXXXXX
 namespace Domain.Entities
 {
     public class User
     {
         [Key]
-        [Required]
-        public int Id {  get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
 
         [Required]
         public string Name { get; set; }
@@ -25,11 +30,13 @@ namespace Domain.Entities
         public string Password { get; set; }
 
         [Required]
-        [EmailAddress (ErrorMessage = "invalid Email Address")]
-        public string EmailAddress {  get; set; }
+        [EmailAddress(ErrorMessage = "invalid Email Address")]
+        public string EmailAddress { get; set; }
 
         [Required]
         public bool IsClient { get; set; }
+
+        public ICollection<Reservation> Reservations { get; set; }
 
         //¿User tendria que tener una lista de reservations?
     }

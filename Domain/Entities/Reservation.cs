@@ -11,18 +11,20 @@ namespace Domain.Entities
     public class Reservation
     {
         [Key]
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        public int IdUser { get; set; }
+
+        public bool isFinalized { get; set; }
 
         //de uno a muchos
         [Required]
-        public ICollection<Sneaker> Sneakers { get; set; } = new List<Sneaker>();
-
-        //De uno a muchos
-        [ForeignKey("Client")]
-        public int ClientId {  get; set; }
+        public ICollection<Sneaker> Sneakers { get; set; }
 
         [Required]
-        public User Client { get; set; }
+        [ForeignKey(("UserId"))]
+        public User User { get; set; }
+
     }
 }
