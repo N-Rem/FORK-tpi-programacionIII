@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    internal class AdminDto
+    public class AdminDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public bool IsClient { get; set; }
+
     }
 }
