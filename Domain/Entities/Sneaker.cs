@@ -11,7 +11,7 @@ namespace Domain.Entities
     public class Sneaker
     {
         [Key]
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //se encarga de hacer el id y devolverlo cuando se necestia.
         public int Id { get; set; }
 
         [Required]
@@ -32,9 +32,9 @@ namespace Domain.Entities
         public int Stock { get; set; }
 
         //de uno a muchos, Pero no estoy seguro si esto esta bien.
-        [ForeignKey ("Reservation")]
-        public int? ReservationId {  get; set; }
+        //[ForeignKey ("Reservation")]
+        //public int? reservationid {  get; set; }
 
-        public Reservation Reservation { get; set; }
+        //public reservation reservation { get; set; }
     }
 }
