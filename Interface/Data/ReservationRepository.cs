@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,29 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class ReservationRepository : RepositoryBase<Reservation>
+    public class RepositoryReservation : RepositoryBase<Reservation>, IRepositoryReservation
     {
         private readonly ApplicationContext _context;
-        public ReservationRepository(ApplicationContext context) : base(context)
+        public RepositoryReservation(ApplicationContext context) : base(context)
         {
             _context = context;
         }
 
+
+        public ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId)
+        {
+            var Reservation = _context.Reservations.FirstOrDefault(r => r.Id == reservationId);
+            if (Reservation == null)
+            {
+                throw new Exception("not found Reservation");
+            }
+
+            Reservation.Sneakers.Add(sneaker);
+            _context.SaveChanges();
+
+            return Reservation.Sneakers;
+
+        }
         /*
         public ICollection<Sneaker> GetSneaker
 
