@@ -26,7 +26,16 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Reservation>()
                 .HasMany(x => x.Sneakers)
                 .WithMany();
+        
+            //Crea primeos datos en la base de datos.
+        //modelBuilder.Entity<Student>().HasData(CreateStudentDataSeed());
+        //modelBuilder.Entity<Professor>().HasData(CreateProfessorDataSeed());
+        //modelBuilder.Entity<Subject>().HasData(CreateSubjectDataSeed());
+        
         }
 
-        }
+        
+
+
     }
+}
