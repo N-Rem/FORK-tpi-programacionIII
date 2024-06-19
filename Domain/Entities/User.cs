@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 //comando Update-Database
 // Add_Migration AddXXXXXX
+//Add-Migration InitialMigration -Context ApplicationContext(primera migracion, Se crea la Base de datos con el ORM)
 namespace Domain.Entities
 {
     public class User

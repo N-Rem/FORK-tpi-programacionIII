@@ -1,9 +1,9 @@
 using Application.Services;
-//Para que aceda al contexto. 
-using nfrastructure.Data;
+using Infrastructure.Data;//Para que aceda al contexto. 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-
-
+//Add - Migration InitialMigration - Context ApplicationContext
 
 var builder = WebApplication.CreateBuilder(args);
 

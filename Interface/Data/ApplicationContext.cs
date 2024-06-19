@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//Son las instrucciones de mapeo del ORM
 namespace Infrastructure.Data
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Reservation>  Reservations { get; set; }
+        //dbset recive una entidad y permite traducirlo a una tabla y la tabla con ese nombre se traduce a entidad
+        public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Sneaker> sneakers { get; set; }
 
