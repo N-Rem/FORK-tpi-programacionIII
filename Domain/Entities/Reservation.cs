@@ -16,7 +16,7 @@ namespace Domain.Entities
 
         public int IdUser { get; set; }
 
-        public bool isFinalized { get; set; }
+        public bool IsFinalized { get; set; }
 
         //de uno a muchos
         [Required]

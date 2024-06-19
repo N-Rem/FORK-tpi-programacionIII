@@ -1,4 +1,6 @@
+using Application.Interfaces;
 using Application.Services;
+using Domain.Interface;
 using Infrastructure.Data;//Para que aceda al contexto. 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -23,6 +25,11 @@ builder.Services.AddScoped<AdminServices>();
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlite(
 builder.Configuration["ConnectionStrings:EcommerceDBConnectionString"], b => b.MigrationsAssembly("Infrastructure")));
 
+//Inyeciones
+builder.Services.AddScoped<IRepositorySneaker,RepositorySneaker>();
+builder.Services.AddScoped<IRepositoryReservation,RepositoryReservation>();
+
+builder.Services.AddScoped<IReservationService, ReservationService>();
 
 
 var app = builder.Build();
