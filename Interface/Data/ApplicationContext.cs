@@ -19,5 +19,23 @@ namespace Infrastructure.Data
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Cardinalidad, muchas zapatillas y muchas reservaciones, 1..n 
+            modelBuilder.Entity<Reservation>()
+                .HasMany(x => x.Sneakers)
+                .WithMany();
+        
+            //Crea primeos datos en la base de datos.
+        //modelBuilder.Entity<Student>().HasData(CreateStudentDataSeed());
+        //modelBuilder.Entity<Professor>().HasData(CreateProfessorDataSeed());
+        //modelBuilder.Entity<Subject>().HasData(CreateSubjectDataSeed());
+        
+        }
+
+        
+
+
     }
 }

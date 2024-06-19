@@ -21,7 +21,7 @@ builder.Services.AddScoped<AdminServices>();
 
 //Se crea la base de datos
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlite(
-builder.Configuration["ConnectionStrings:EcommerceDBConnectionString"], b => b.MigrationsAssembly("Web")));
+builder.Configuration["ConnectionStrings:EcommerceDBConnectionString"], b => b.MigrationsAssembly("Infrastructure")));
 
 
 
