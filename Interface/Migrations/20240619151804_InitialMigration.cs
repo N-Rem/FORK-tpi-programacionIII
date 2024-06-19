@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Web.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
@@ -10,6 +10,23 @@ namespace Web.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "sneakers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Brand = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<int>(type: "INTEGER", nullable: false),
+                    Category = table.Column<string>(type: "TEXT", nullable: false),
+                    Stock = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_sneakers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
@@ -48,26 +65,27 @@ namespace Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sneakers",
+                name: "ReservationSneaker",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Brand = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    Category = table.Column<string>(type: "TEXT", nullable: false),
-                    Stock = table.Column<int>(type: "INTEGER", nullable: false),
-                    ReservationId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ReservationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SneakersId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_sneakers", x => x.Id);
+                    table.PrimaryKey("PK_ReservationSneaker", x => new { x.ReservationId, x.SneakersId });
                     table.ForeignKey(
-                        name: "FK_sneakers_Reservations_ReservationId",
+                        name: "FK_ReservationSneaker_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReservationSneaker_sneakers_SneakersId",
+                        column: x => x.SneakersId,
+                        principalTable: "sneakers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -76,19 +94,22 @@ namespace Web.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_sneakers_ReservationId",
-                table: "sneakers",
-                column: "ReservationId");
+                name: "IX_ReservationSneaker_SneakersId",
+                table: "ReservationSneaker",
+                column: "SneakersId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "sneakers");
+                name: "ReservationSneaker");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
+
+            migrationBuilder.DropTable(
+                name: "sneakers");
 
             migrationBuilder.DropTable(
                 name: "users");
