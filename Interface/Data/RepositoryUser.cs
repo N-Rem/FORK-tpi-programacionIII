@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class UserRepository : RepositoryBase<User>
+    public class RepositoryUser : RepositoryBase<User>
     {
         private readonly ApplicationContext _context;
-        public UserRepository(ApplicationContext context) : base(context)
+        public RepositoryUser(ApplicationContext context) : base(context)
         {
             _context = context;
         }
