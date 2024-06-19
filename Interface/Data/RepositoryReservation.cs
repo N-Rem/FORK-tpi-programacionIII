@@ -31,6 +31,12 @@ namespace Infrastructure.Data
             return Reservation.Sneakers;
 
         }
+
+        public void FinalizedReservation(Reservation reservation)
+        {
+            reservation.IsFinalized = true;
+            _context.SaveChanges();
+        }
         /*
         public ICollection<Sneaker> GetSneaker
 

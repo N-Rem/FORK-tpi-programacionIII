@@ -10,5 +10,6 @@ namespace Domain.Interface
     public interface IRepositoryReservation : IRepositoryBase<Reservation>
     {
         ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId);
+        void FinalizedReservation(Reservation reservation);
     }
 }
