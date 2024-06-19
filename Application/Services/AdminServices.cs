@@ -31,7 +31,13 @@ namespace Application.Services
 
         public AdminDto create(AdminDto user)
         {
-            var user2 = new AdminDto(user.Id, user.Name, user.Password, user.Email);
+            var user2 = new AdminDto()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Password = user.Password,
+                IsClient = user.IsClient,
+            };
             return user2;
         }
 
