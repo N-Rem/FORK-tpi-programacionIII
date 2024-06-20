@@ -28,9 +28,11 @@ builder.Configuration["ConnectionStrings:EcommerceDBConnectionString"], b => b.M
 //Inyeciones
 builder.Services.AddScoped<IRepositorySneaker,RepositorySneaker>();
 builder.Services.AddScoped<IRepositoryReservation,RepositoryReservation>();
+builder.Services.AddScoped<IRepositoryUser,RepositoryUser>();
 
 builder.Services.AddScoped<IReservationService, ReservationService>();
-
+builder.Services.AddScoped<ISneakerService, SneakerServices>();
+builder.Services.AddScoped<IAdminService, AdminServices>();
 
 var app = builder.Build();
 

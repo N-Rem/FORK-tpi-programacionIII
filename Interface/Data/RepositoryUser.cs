@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class RepositoryUser : RepositoryBase<User>
+    public class RepositoryUser : RepositoryBase<User>, IRepositoryUser
     {
         private readonly ApplicationContext _context;
         public RepositoryUser(ApplicationContext context) : base(context)
@@ -15,9 +16,7 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-       public List<Sneaker> GetByBrand(string brand)
-       {
-           return (List<Sneaker>)_context.Set<Sneaker>().ToList().Where(sneaker => sneaker.Brand == brand);
-       }
+       
+       
     }
 }

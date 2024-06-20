@@ -17,6 +17,5 @@ namespace Application.Models
         public string Category { get; set; }
         public int Stock { get; set; }
 
-
     }
 }

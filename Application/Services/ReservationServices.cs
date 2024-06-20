@@ -21,6 +21,7 @@ namespace Application.Services
             _repositorySneaker = repositorySneaker;
         }
 
+        //Crud reservation
         public ReservationDto Create(ReservationDto reservation)
         {
             var newReservation = new Reservation()
@@ -54,7 +55,7 @@ namespace Application.Services
         public ReservationDto GetById(int id)
         {
             var obj = _repositoryReservation.GetById(id)
-                ?? throw new Exception("");
+                ?? throw new Exception("No encontrado");
 
             var objDto = new ReservationDto()
             {
@@ -67,6 +68,9 @@ namespace Application.Services
             return objDto;
         }
 
+        //----------------
+
+
         public void FinalizedReservation(int id)
         {
             var obj = _repositoryReservation.GetById(id)
@@ -74,6 +78,8 @@ namespace Application.Services
 
             _repositoryReservation.FinalizedReservation(obj);
         }
+
+
 
         public List<Sneaker> AddToReservation(int idSneaker, int idReservation)
         {
@@ -83,6 +89,7 @@ namespace Application.Services
             return (List<Sneaker>)_repositoryReservation.AddToReservation(obj, idReservation);
            
         }
+
 
     }
 }
