@@ -9,5 +9,7 @@ namespace Domain.Interface
 {
     public interface IRepositoryUser : IRepositoryBase<User>
     {
+
+
     }
 }

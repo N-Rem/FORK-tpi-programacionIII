@@ -1,5 +1,7 @@
-﻿using Application.Models;
+﻿using Application.Interfaces;
+using Application.Models;
 using Domain.Entities;
+using Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,38 +10,78 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class AdminServices
+    public class AdminServices: IAdminService
     {
-        /*public AdminDto getById(int id)
+        private readonly IRepositoryUser _repositoryUser;
+        private readonly IRepositorySneaker _repositorySneaker;
+        private readonly IRepositoryReservation _repositoryReservation;
+        public AdminServices( IRepositoryUser repositoryUser, IRepositorySneaker repositorySneaker, IRepositoryReservation repositoryReservation)
         {
-            return new AdminDto();
-        }*/
-
-        /*public List<AdminDto> getAll()
+            _repositoryUser = repositoryUser;
+            _repositorySneaker = repositorySneaker;
+            _repositoryReservation = repositoryReservation;
+        }
+        //CRUD ---- ADMIN
+        public List<User> GetAdmins()
         {
-            return new List<AdminDto>();
-        }*/
-        public void deleteById(int id)
-        {
-
+            return _repositoryUser.GetAll().Where(user=>!user.IsClient).ToList();
         }
 
-        public void updateById(int id, AdminDto user)
+        public AdminDto GetById(int id)
         {
+            var obj = _repositoryUser.GetById(id)
+                 ?? throw new Exception("No encontrado");
 
-        }
-
-        public AdminDto create(AdminDto user)
-        {
-            var user2 = new AdminDto()
+            var objDto = new AdminDto()
             {
-                Id = user.Id,
-                Name = user.Name,
-                Password = user.Password,
-                IsClient = user.IsClient,
+                Id = obj.Id,
+                Name = obj.Name,
+                Email= obj.EmailAddress,
+                IsClient = obj.IsClient,
             };
-            return user2;
+
+            return objDto;
         }
+
+
+        public AdminDto Create (AdminDto adminDto)
+        {
+            var Admin = new User()
+            {
+                Name = adminDto.Name,
+                Password = adminDto.Password,
+                EmailAddress = adminDto.Email,
+                IsClient = false
+            };
+
+            _repositoryUser.Add(Admin);
+           return adminDto;
+        }
+
+        public void Update (AdminDto adminDto)
+        {
+            var admin = new User()
+            {
+                Id= adminDto.Id,
+                Name = adminDto.Name,
+                Password = adminDto.Password,
+                EmailAddress = adminDto.Email,
+            };
+            _repositoryUser.Update(admin);
+        }
+
+        public void DeleteById(int id)
+        {
+            var obj = _repositoryUser.GetById(id);
+            if (obj == null)
+            {
+                throw new Exception("no encontrado");
+            }
+            _repositoryUser.Delete(obj);
+        }
+
+        
+
 
 
     }

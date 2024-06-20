@@ -31,10 +31,6 @@ namespace Domain.Entities
         [Range(0, int.MaxValue, ErrorMessage = "must be a positive value.")]
         public int Stock { get; set; }
 
-        //de uno a muchos, Pero no estoy seguro si esto esta bien.
-        //[ForeignKey ("Reservation")]
-        //public int? reservationid {  get; set; }
-
-        //public reservation reservation { get; set; }
+        
     }
 }
