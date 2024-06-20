@@ -44,7 +44,7 @@ namespace Application.Services
         }
 
 
-        public AdminDto Create (AdminDto adminDto)
+        public AdminDto CreateAdmin (AdminDto adminDto)
         {
             var Admin = new User()
             {
@@ -79,6 +79,8 @@ namespace Application.Services
             }
             _repositoryUser.Delete(obj);
         }
+
+
 
         
 
