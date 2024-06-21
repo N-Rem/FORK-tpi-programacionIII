@@ -23,7 +23,7 @@ namespace Domain.Entities
         public ICollection<Sneaker> Sneakers { get; set; }
 
         [Required]
-        [ForeignKey(("UserId"))]
+        [ForeignKey(("IdUser"))]
         public User User { get; set; }
 
     }
