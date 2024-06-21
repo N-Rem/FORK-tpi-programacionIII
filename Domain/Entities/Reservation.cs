@@ -16,7 +16,7 @@ namespace Domain.Entities
 
         public int IdUser { get; set; }
 
-        public bool IsFinalized { get; set; }
+        public ReservationState State { get; set; }
 
         //de uno a muchos
         [Required]
@@ -25,6 +25,13 @@ namespace Domain.Entities
         [Required]
         [ForeignKey(("IdUser"))]
         public User User { get; set; }
+
+
+        public enum ReservationState
+        {
+            Active,
+            Finalized,
+        }
 
     }
 }

@@ -24,7 +24,7 @@ namespace Application.Services
         //CRUD ---- ADMIN
         public List<User> GetAdmins()
         {
-            return _repositoryUser.GetAll().Where(user=>!user.IsClient).ToList();
+            return _repositoryUser.GetAll().Where(user=>user.Type == User.UserType.admin).ToList();
         }
 
         public AdminDto GetById(int id)
@@ -36,8 +36,8 @@ namespace Application.Services
             {
                 Id = obj.Id,
                 Name = obj.Name,
-                Email= obj.EmailAddress,
-                IsClient = obj.IsClient,
+                EmailAddress= obj.EmailAddress,
+                Type = obj.Type,
             };
 
             return objDto;
@@ -50,9 +50,9 @@ namespace Application.Services
             {
                 Name = adminDto.Name,
                 Password = adminDto.Password,
-                EmailAddress = adminDto.Email,
-                IsClient = false
-            };
+                EmailAddress = adminDto.EmailAddress,
+                Type = User.UserType.admin 
+                };
 
             _repositoryUser.Add(Admin);
            return adminDto;
@@ -65,7 +65,7 @@ namespace Application.Services
                 Id= adminDto.Id,
                 Name = adminDto.Name,
                 Password = adminDto.Password,
-                EmailAddress = adminDto.Email,
+                EmailAddress = adminDto.EmailAddress,
             };
             _repositoryUser.Update(admin);
         }

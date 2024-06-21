@@ -34,7 +34,7 @@ namespace Infrastructure.Data
 
         public void FinalizedReservation(Reservation reservation)
         {
-            reservation.IsFinalized = true;
+            reservation.State = Reservation.ReservationState.Finalized;
             _context.SaveChanges();
         }
         /*

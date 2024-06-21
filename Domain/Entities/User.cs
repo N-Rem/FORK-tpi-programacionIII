@@ -35,10 +35,17 @@ namespace Domain.Entities
         public string EmailAddress { get; set; }
 
         [Required]
-        public bool IsClient { get; set; }
+        public UserType Type { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }
 
         //¿User tendria que tener una lista de reservations?
+
+        public enum UserType
+        {
+            visitor,
+            client,
+            admin,
+        }
     }
 }

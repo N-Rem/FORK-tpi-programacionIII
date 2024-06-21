@@ -48,11 +48,11 @@ namespace Infrastructure.Data
         {
             return new User[]
             {
-            new User { Id = 1, Name = "Ana", Password = "Pass1", EmailAddress = "Ana@example.com", IsClient = false },
-            new User { Id = 2, Name = "Delfina", Password = "Pass2", EmailAddress = "delfina@example.com", IsClient = false },
-            new User { Id = 3, Name = "Juan", Password = "Pass3", EmailAddress = "juan.doe@example.com", IsClient = true },
-            new User { Id = 4, Name = "Victoria", Password = "Pass4", EmailAddress = "vicky.sosa@example.com", IsClient = true },
-            new User { Id = 5, Name = "Lautaro", Password = "Pass5", EmailAddress = "lautaro.rb@example.com", IsClient = true },
+            new User { Id = 1, Name = "Ana", Password = "Pass1", EmailAddress = "Ana@example.com", Type = User.UserType.admin },
+            new User { Id = 2, Name = "Delfina", Password = "Pass2", EmailAddress = "delfina@example.com", Type = User.UserType.admin },
+            new User { Id = 3, Name = "Juan", Password = "Pass3", EmailAddress = "juan.doe@example.com", Type = User.UserType.client  },
+            new User { Id = 4, Name = "Victoria", Password = "Pass4", EmailAddress = "vicky.sosa@example.com", Type = User.UserType.client },
+            new User { Id = 5, Name = "Lautaro", Password = "Pass5", EmailAddress = "lautaro.rb@example.com", Type = User.UserType.client },
             };
         }
 
@@ -60,14 +60,14 @@ namespace Infrastructure.Data
         {
             return new Sneaker[]
             {
-            new Sneaker { Id = 1, Name = "Air Max", Brand = "Nike", Price = 120, Category = "Sports", Stock = 50 },
-            new Sneaker { Id = 2, Name = "Classic", Brand = "Adidas", Price = 100, Category = "Casual", Stock = 30 },
-            new Sneaker { Id = 3, Name = "ZoomX", Brand = "Nike", Price = 150, Category = "Running", Stock = 20 },
-            new Sneaker { Id = 4, Name = "Superstar", Brand = "Adidas", Price = 80, Category = "Casual", Stock = 40 },
-            new Sneaker { Id = 5, Name = "Gel-Kayano", Brand = "Adidas", Price = 140, Category = "Running", Stock = 25 },
-            new Sneaker { Id = 6, Name = "Chuck Taylor", Brand = "Converse", Price = 60, Category = "Casual", Stock = 35 },
-            new Sneaker { Id = 7, Name = "Ultraboost", Brand = "Adidas", Price = 180, Category = "Running", Stock = 15 },
-            new Sneaker { Id = 8, Name = "Pegasus", Brand = "Nike", Price = 110, Category = "Sports", Stock = 45 },
+            new Sneaker { Id = 1, Name = "Air Max", Brand = Sneaker.SneakerBrand.Nike, Price = 120, Category = Sneaker.SneakerCategory.Casual, Stock = 50 },
+            new Sneaker { Id = 2, Name = "Classic", Brand = Sneaker.SneakerBrand.Adidas, Price = 100, Category = Sneaker.SneakerCategory.Casual, Stock = 30 },
+            new Sneaker { Id = 3, Name = "ZoomX", Brand = Sneaker.SneakerBrand.Nike, Price = 150, Category = Sneaker.SneakerCategory.Running, Stock = 20 },
+            new Sneaker { Id = 4, Name = "Superstar", Brand = Sneaker.SneakerBrand.Adidas, Price = 80, Category = Sneaker.SneakerCategory.Running, Stock = 40 },
+            new Sneaker { Id = 5, Name = "Gel-Kayano", Brand = Sneaker.SneakerBrand.Adidas, Price = 140, Category = Sneaker.SneakerCategory.Sports, Stock = 25 },
+            new Sneaker { Id = 6, Name = "Chuck Taylor", Brand = Sneaker.SneakerBrand.Converse, Price = 60, Category = Sneaker.SneakerCategory.Casual, Stock = 35 },
+            new Sneaker { Id = 7, Name = "Ultraboost", Brand = Sneaker.SneakerBrand.Adidas, Price = 180, Category = Sneaker.SneakerCategory.Sports, Stock = 15 },
+            new Sneaker { Id = 8, Name = "Pegasus", Brand = Sneaker.SneakerBrand.Nike, Price = 110, Category = Sneaker.SneakerCategory.Running, Stock = 45 },
             };
         }
 
@@ -76,9 +76,9 @@ namespace Infrastructure.Data
             //Crea reservaciones sin su lista de Sneaker
             return new Reservation[]
             {
-                new Reservation { Id = 1, IdUser = 3, IsFinalized = false },
-                new Reservation { Id = 2, IdUser = 4, IsFinalized = false },
-                new Reservation { Id = 3, IdUser = 5, IsFinalized = false },
+                new Reservation { Id = 1, IdUser = 3, State = Reservation.ReservationState.Active },
+                new Reservation { Id = 2, IdUser = 4, State = Reservation.ReservationState.Active },
+                new Reservation { Id = 3, IdUser = 5, State = Reservation.ReservationState.Active },
             };            
         }
     }

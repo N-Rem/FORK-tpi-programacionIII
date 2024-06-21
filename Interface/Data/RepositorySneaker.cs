@@ -18,12 +18,14 @@ namespace Infrastructure.Data
 
         public ICollection<Sneaker>? GetByBrand(string brand)
         {
-            return (List<Sneaker>)_context.Set<Sneaker>().ToList().Where(sneaker => sneaker.Brand == brand);
+            return (List<Sneaker>)_context.Set<Sneaker>().ToList().Where(sneaker => sneaker.Brand.ToString().Equals(brand, StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         public ICollection<Sneaker>? GetByCategory(string category)
         {
-            return (List<Sneaker>)_context.Set<Sneaker>().ToList().Where(Sneaker => Sneaker.Category == category);
+            return (List<Sneaker>)_context.Set<Sneaker>().ToList().Where(sneaker => sneaker.Category.ToString().Equals(category, StringComparison.OrdinalIgnoreCase))
+                .ToList(); 
         }
 
         public void Buy(Sneaker sneaker)
