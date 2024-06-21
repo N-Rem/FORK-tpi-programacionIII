@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -50,15 +52,14 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     IdUser = table.Column<int>(type: "INTEGER", nullable: false),
-                    isFinalized = table.Column<bool>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    IsFinalized = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Reservations_users_IdUser",
+                        column: x => x.IdUser,
                         principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -88,10 +89,47 @@ namespace Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservations_UserId",
+            migrationBuilder.InsertData(
+                table: "sneakers",
+                columns: new[] { "Id", "Brand", "Category", "Name", "Price", "Stock" },
+                values: new object[,]
+                {
+                    { 1, "Nike", "Sports", "Air Max", 120, 50 },
+                    { 2, "Adidas", "Casual", "Classic", 100, 30 },
+                    { 3, "Nike", "Running", "ZoomX", 150, 20 },
+                    { 4, "Adidas", "Casual", "Superstar", 80, 40 },
+                    { 5, "Adidas", "Running", "Gel-Kayano", 140, 25 },
+                    { 6, "Converse", "Casual", "Chuck Taylor", 60, 35 },
+                    { 7, "Adidas", "Running", "Ultraboost", 180, 15 },
+                    { 8, "Nike", "Sports", "Pegasus", 110, 45 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "Id", "EmailAddress", "IsClient", "Name", "Password" },
+                values: new object[,]
+                {
+                    { 1, "Ana@example.com", false, "Ana", "Pass1" },
+                    { 2, "delfina@example.com", false, "Delfina", "Pass2" },
+                    { 3, "juan.doe@example.com", true, "Juan", "Pass3" },
+                    { 4, "vicky.sosa@example.com", true, "Victoria", "Pass4" },
+                    { 5, "lautaro.rb@example.com", true, "Lautaro", "Pass5" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Reservations",
-                column: "UserId");
+                columns: new[] { "Id", "IdUser", "IsFinalized" },
+                values: new object[,]
+                {
+                    { 1, 3, false },
+                    { 2, 4, false },
+                    { 3, 5, false }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_IdUser",
+                table: "Reservations",
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReservationSneaker_SneakersId",
