@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class ReservationService : IReservationService
+    public class ReservationServices : IReservationServices
     {
         private readonly IRepositoryReservation _repositoryReservation;
         private readonly IRepositorySneaker _repositorySneaker;
-        public ReservationService (IRepositoryReservation repositoryReservation, IRepositorySneaker repositorySneaker)
+        public ReservationServices (IRepositoryReservation repositoryReservation, IRepositorySneaker repositorySneaker)
         {
             _repositoryReservation = repositoryReservation;
             _repositorySneaker = repositorySneaker;

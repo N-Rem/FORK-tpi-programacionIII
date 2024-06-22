@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IAdminService
+    public interface IUserServices
     {
         List<User> GetAdmins();
         AdminDto GetById(int id);
