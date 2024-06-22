@@ -34,6 +34,7 @@ builder.Services.AddScoped<IReservationServices, ReservationServices>();
 builder.Services.AddScoped<ISneakerServices, SneakerServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

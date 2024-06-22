@@ -18,19 +18,33 @@ namespace Domain.Entities
         public string Name { get; set; }
 
         [Required]
-        public string Brand { get; set; }
+        public SneakerBrand Brand { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "must be a positive value.")] //solo se puede agregar un numero mayor o igual a 0
         public int Price { get; set; }
 
         [Required]
-        public string Category { get; set; }
+        public SneakerCategory Category { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "must be a positive value.")]
         public int Stock { get; set; }
 
+
+        public enum SneakerCategory
+        {
+            Sports,
+            Casual,
+            Running
+        }
+
+        public enum SneakerBrand
+        {
+            Nike,
+            Adidas,
+            Converse
+        }
         
     }
 }

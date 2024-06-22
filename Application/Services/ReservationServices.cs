@@ -28,7 +28,7 @@ namespace Application.Services
             {
                 Id = reservation.Id,
                 IdUser = reservation.IdUser,
-                IsFinalized = false,
+                State = Reservation.ReservationState.Active,
             };
             _repositoryReservation.Add(newReservation);
             return reservation;
@@ -60,7 +60,7 @@ namespace Application.Services
             var objDto = new ReservationDto()
             {
                 Id = obj.Id,
-                IsFinalized = obj.IsFinalized,
+                State = obj.State,
                 Sneakers = obj.Sneakers,
                 IdUser = obj.IdUser,
             };
