@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class SneakerServices: ISneakerService
+    public class SneakerServices: ISneakerServices
     {
         private IRepositorySneaker _repositorySneaker;
 

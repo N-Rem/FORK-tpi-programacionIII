@@ -9,9 +9,9 @@ namespace Web.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
-        private readonly IReservationService _reservationService;
+        private readonly IReservationServices _reservationService;
 
-        public ReservationController(IReservationService reservationService)
+        public ReservationController(IReservationServices reservationService)
         {
             _reservationService = reservationService;
         }

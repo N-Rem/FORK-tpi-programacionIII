@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<AdminServices>();
+builder.Services.AddScoped<UserServices>();
 
 
 
@@ -30,9 +30,9 @@ builder.Services.AddScoped<IRepositorySneaker,RepositorySneaker>();
 builder.Services.AddScoped<IRepositoryReservation,RepositoryReservation>();
 builder.Services.AddScoped<IRepositoryUser,RepositoryUser>();
 
-builder.Services.AddScoped<IReservationService, ReservationService>();
-builder.Services.AddScoped<ISneakerService, SneakerServices>();
-builder.Services.AddScoped<IAdminService, AdminServices>();
+builder.Services.AddScoped<IReservationServices, ReservationServices>();
+builder.Services.AddScoped<ISneakerServices, SneakerServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
 
