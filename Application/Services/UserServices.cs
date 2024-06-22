@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class AdminServices: IAdminService
+    public class UserServices: IAdminService
     {
         private readonly IRepositoryUser _repositoryUser;
         private readonly IRepositorySneaker _repositorySneaker;
         private readonly IRepositoryReservation _repositoryReservation;
-        public AdminServices( IRepositoryUser repositoryUser, IRepositorySneaker repositorySneaker, IRepositoryReservation repositoryReservation)
+        public UserServices( IRepositoryUser repositoryUser, IRepositorySneaker repositorySneaker, IRepositoryReservation repositoryReservation)
         {
             _repositoryUser = repositoryUser;
             _repositorySneaker = repositorySneaker;

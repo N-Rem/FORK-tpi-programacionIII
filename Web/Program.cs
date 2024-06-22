@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<AdminServices>();
+builder.Services.AddScoped<UserServices>();
 
 
 
@@ -32,7 +32,7 @@ builder.Services.AddScoped<IRepositoryUser,RepositoryUser>();
 
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ISneakerService, SneakerServices>();
-builder.Services.AddScoped<IAdminService, AdminServices>();
+builder.Services.AddScoped<IAdminService, UserServices>();
 
 var app = builder.Build();
 
