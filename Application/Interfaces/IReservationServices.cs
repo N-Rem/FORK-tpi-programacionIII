@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IReservationService
+    public interface IReservationServices
     {
         ReservationDto Create(ReservationDto reservation);
         void Delete(int id);

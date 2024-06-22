@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class UserServices: IAdminService
+
+    public class UserServices: IUserServices
+
     {
         private readonly IRepositoryUser _repositoryUser;
         private readonly IRepositorySneaker _repositorySneaker;
@@ -24,7 +26,9 @@ namespace Application.Services
         //CRUD ---- ADMIN
         public List<User> GetAdmins()
         {
+
             return _repositoryUser.GetAll().Where(user=>user.Type == User.UserType.admin).ToList();
+
         }
 
         public AdminDto GetById(int id)
@@ -36,8 +40,10 @@ namespace Application.Services
             {
                 Id = obj.Id,
                 Name = obj.Name,
+
                 EmailAddress= obj.EmailAddress,
                 Type = obj.Type,
+
             };
 
             return objDto;
@@ -50,9 +56,11 @@ namespace Application.Services
             {
                 Name = adminDto.Name,
                 Password = adminDto.Password,
+
                 EmailAddress = adminDto.EmailAddress,
                 Type = User.UserType.admin 
                 };
+
 
             _repositoryUser.Add(Admin);
            return adminDto;
@@ -65,7 +73,9 @@ namespace Application.Services
                 Id= adminDto.Id,
                 Name = adminDto.Name,
                 Password = adminDto.Password,
+
                 EmailAddress = adminDto.EmailAddress,
+
             };
             _repositoryUser.Update(admin);
         }

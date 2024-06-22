@@ -9,13 +9,13 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAdminService _adminServices;
-        private readonly IReservationService _reservationService;
-        private readonly ISneakerService _sneakerServices;
+        private readonly IUserServices _adminServices;
+        private readonly IReservationServices _reservationService;
+        private readonly ISneakerServices _sneakerServices;
 
-        public AdminController(IAdminService adminServices, IReservationService reservationService, ISneakerService sneakerService)
+        public UserController(IUserServices adminServices, IReservationServices reservationService, ISneakerServices sneakerService)
         {
             _adminServices = adminServices;
             _reservationService = reservationService;

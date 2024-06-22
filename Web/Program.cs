@@ -30,9 +30,10 @@ builder.Services.AddScoped<IRepositorySneaker,RepositorySneaker>();
 builder.Services.AddScoped<IRepositoryReservation,RepositoryReservation>();
 builder.Services.AddScoped<IRepositoryUser,RepositoryUser>();
 
-builder.Services.AddScoped<IReservationService, ReservationService>();
-builder.Services.AddScoped<ISneakerService, SneakerServices>();
-builder.Services.AddScoped<IAdminService, UserServices>();
+builder.Services.AddScoped<IReservationServices, ReservationServices>();
+builder.Services.AddScoped<ISneakerServices, SneakerServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+
 
 var app = builder.Build();
 
