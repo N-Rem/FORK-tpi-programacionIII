@@ -1,6 +1,4 @@
-﻿
-using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static Domain.Entities.User;
 
-namespace Application.Models
+namespace Application.Models.Requests
 {
-    public class ClientDto
+    public class UserCreateRequest
     {
-        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -33,6 +30,5 @@ namespace Application.Models
         [Required]
         public UserType Type { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
     }
 }

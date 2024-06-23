@@ -10,7 +10,7 @@ using static Domain.Entities.User;
 
 namespace Application.Models
 {
-    public class AdminDto
+    public class UserDto
     {
         public int Id { get; set; }
         [Required]
@@ -30,7 +30,38 @@ namespace Application.Models
 
         public UserType Type { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<ReservationDto> Reservations { get; set; }
+
+        public static UserDto Create(User user)
+        {
+            var dto = new UserDto();
+
+            dto.Name = user.Name;
+            dto.Password = "";
+            dto.EmailAddress = user.EmailAddress;
+            dto.Id = user.Id;
+            dto.Type = user.Type;
+
+            if (user.Reservations != null)
+            {
+                foreach (var reservation in user.Reservations)
+                {
+                    dto.Reservations.Add(ReservationDto.Create(reservation));
+                }
+            }
+
+            return dto;
+        }
+
+        public static List<UserDto> CreateList(IEnumerable<User> user)
+        {
+            List<UserDto> listDto = [];
+            foreach (var u in user)
+            {
+                listDto.Add(Create(u));
+            }
+            return listDto;
+        }
 
 
         //Hacer un metodo que cree listas de dtos (https://github.com/UTN-FRRO-TUP-Programacion3/ConsultaAlumnos/blob/main/src/Application/Models/QuestionDto.cs) linea 46

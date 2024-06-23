@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Domain.Entities.User;
 
-namespace Application.Models
+namespace Application.Models.Requests
 {
-    public class UserCreateReques
+    public class UserUpdateRequest
     {
-
         [Required]
         public string Name { get; set; }
 

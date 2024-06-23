@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.Requests;
 using Domain.Entities;
 using Domain.Interface;
 using System;
@@ -11,12 +12,12 @@ namespace Application.Interfaces
 {
     public interface IUserServices
     {
-        List<User> GetAdmins();
-        AdminDto GetById(int id);
-        AdminDto CreateAdmin(AdminDto adminDto);
-
-        void Update(AdminDto adminDto);
-
+        List<UserDto> GetAdmins();
+        List<UserDto> GetClients();
+        List<UserDto> GetUsers();
+        UserDto GetById(int id);
+        User CreateUser(UserCreateRequest userDto);
+        void Update(int id, UserUpdateRequest userDto);
         void DeleteById(int id);
 
 
