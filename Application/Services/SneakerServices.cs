@@ -10,19 +10,21 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class SneakerServices: ISneakerServices
+    public class SneakerServices : ISneakerServices
     {
         private IRepositorySneaker _repositorySneaker;
+        private IRepositoryReservation _repositoryReservation;
 
-        public SneakerServices(IRepositorySneaker repositorySneaker)
+        public SneakerServices(IRepositorySneaker repositorySneaker, IRepositoryReservation respositoryReservation)
         {
+            _repositoryReservation = respositoryReservation;
             _repositorySneaker = repositorySneaker;
         }
 
         //CRUD ----- Sneaker
-        public List<Sneaker> GetSneaker()
+        public List<SneakerDto> GetSneaker()
         {
-            return _repositorySneaker.GetAll();
+            return SneakerDto.CreateList(_repositorySneaker.GetAll());
         }
 
         public SneakerDto GetById(int id)
@@ -30,15 +32,7 @@ namespace Application.Services
             var obj = _repositorySneaker.GetById(id)
                  ?? throw new Exception("No encontrado");
 
-            var objDto = new SneakerDto()
-            {
-                Id = obj.Id,
-                Name = obj.Name,
-                Brand = obj.Brand,
-                Category = obj.Category,
-                Price = obj.Price,
-                Stock = obj.Stock
-            };
+            var objDto = SneakerDto.Create(obj);
 
             return objDto;
         }
@@ -48,30 +42,31 @@ namespace Application.Services
         {
             var sneaker = new Sneaker()
             {
-                Id= sneakerDto.Id,
+                Id = sneakerDto.Id,
                 Name = sneakerDto.Name,
                 Brand = sneakerDto.Brand,
                 Category = sneakerDto.Category,
                 Price = sneakerDto.Price,
-                Stock= sneakerDto.Stock,
+                Stock = sneakerDto.Stock,
             };
 
             _repositorySneaker.Add(sneaker);
             return sneakerDto;
         }
 
-        public void Update(SneakerDto sneakerDto)
+        public void Update(SneakerDto sneakerDto, int id)
         {
-            var sneaker = new Sneaker()
-            {
-                Id = sneakerDto.Id,
-               Name = sneakerDto.Name,
-               Brand = sneakerDto.Brand,
-               Category = sneakerDto.Category,
-               Price = sneakerDto.Price,
-               Stock = sneakerDto.Stock,
-            };
-            _repositorySneaker.Update(sneaker);
+            var obj = _repositorySneaker.GetById(id)
+                ?? throw new Exception("No se encontro la zapatilla");
+
+
+            obj.Name = sneakerDto.Name;
+            obj.Brand = sneakerDto.Brand;
+            obj.Category = sneakerDto.Category;
+            obj.Price = sneakerDto.Price;
+            obj.Stock = sneakerDto.Stock;
+
+            _repositorySneaker.Update(obj);
         }
 
         public void DeleteById(int id)
@@ -86,32 +81,43 @@ namespace Application.Services
 
         //-------------
 
-        public List<Sneaker> GetByBrand(string brand)
+        public List<SneakerDto> GetByBrand(string brand)
         {
-            var listObj =  _repositorySneaker.GetByBrand(brand)
+            var listObj = _repositorySneaker.GetByBrand(brand)
                 ?? throw new Exception("Marca no encontrada");
-            return (List<Sneaker>)listObj;
+
+
+            return SneakerDto.CreateList(listObj);
         }
 
-        public List<Sneaker> GetByCategory(string category)
+        public List<SneakerDto> GetByCategory(string category)
         {
             var listObj = _repositorySneaker.GetByCategory(category)
                 ?? throw new Exception("Categoria no encontrada");
-            return (List<Sneaker>)listObj;
+            return SneakerDto.CreateList(listObj);
         }
 
         public void Buy(int id)
         {
-            var obj = _repositorySneaker.GetById(id) 
-                ?? throw new Exception("No se encontro el producto");
-            _repositorySneaker.Buy(obj);
-        }
-
-        public bool CheckAvailableProduct(int id)
-        {
             var obj = _repositorySneaker.GetById(id)
                 ?? throw new Exception("No se encontro el producto");
-            return _repositorySneaker.CheckAvailableProduct(obj);
+            if (_repositorySneaker.CheckAvailableProduct(obj))
+            {
+                _repositorySneaker.Buy(obj);
+            }
+            throw new Exception("No hay stock");
+        }
+
+        public void BuySneakers(int idReservation)
+        {
+            var reservation = _repositoryReservation.GetById(idReservation)
+                ?? throw new Exception("no se encontro la reservacion");
+
+            foreach (var sneaker in reservation.Sneakers)
+            {
+                Buy(sneaker.Id);
+            }
+            //No estoy seguro si va a funcionar con si algunas zapatillas no tienen stock y otras si. 
         }
 
     }

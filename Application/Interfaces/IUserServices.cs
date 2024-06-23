@@ -25,11 +25,6 @@ namespace Application.Interfaces
 
         void DeleteById(int id);
 
-        //--
-        void CreateAdmin(UserCreateRequest adminDto);
-        void CreateClient(UserCreateRequest clientDto);
-
-
 
 
     }
