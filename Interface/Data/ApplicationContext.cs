@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace Infrastructure.Data
 
         }
 
+            //---Fuent API---
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Fuent API
-            //Cardinalidad, muchas zapatillas y muchas reservaciones, 1..n 
+            //Cardinalidad, relación muchos a muchos entre Reservation y Sneaker 
             modelBuilder.Entity<Reservation>()
                 //de muchos a muchos
                 .HasMany(x => x.Sneakers)
@@ -36,6 +37,25 @@ namespace Infrastructure.Data
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reservations)
                 .HasForeignKey(r => r.IdUser);
+
+            // ---Configura las propiedades enum para almacenarse como cadenas---
+            modelBuilder.Entity<Sneaker>()
+                .Property(s => s.Brand)
+                .HasConversion(new EnumToStringConverter<Sneaker.SneakerBrand>());
+
+            modelBuilder.Entity<Sneaker>()
+                .Property(s => s.Category)
+                .HasConversion(new EnumToStringConverter<Sneaker.SneakerCategory>());
+
+            modelBuilder.Entity<User>()
+                .Property(s => s.Type)
+                .HasConversion(new EnumToStringConverter<User.UserType>());
+
+            modelBuilder.Entity<Reservation>()
+                .Property(s => s.State)
+                .HasConversion(new EnumToStringConverter<Reservation.ReservationState>());
+
+
 
             //Crea primeos datos en la base de datos.
             modelBuilder.Entity<User>().HasData(CreateUserSeedData());

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using static Domain.Entities.User;
 
@@ -28,6 +29,7 @@ namespace Application.Models
         [EmailAddress(ErrorMessage = "invalid Email Address")]
         public string EmailAddress { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UserType Type { get; set; }
 
         public ICollection<ReservationDto> Reservations { get; set; }

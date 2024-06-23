@@ -10,11 +10,11 @@ namespace Application.Interfaces
 {
     public interface IReservationServices
     {
-        ReservationDto Create(ReservationDto reservation);
+        void Create(int idUser);
         void Delete(int id);
-        List<Reservation> GetAll();
+        List<ReservationDto> GetAll();
         ReservationDto GetById(int id);
         void FinalizedReservation(int id);
-        List<Sneaker> AddToReservation(int idSneaker, int idReservation);
+        List<SneakerDto>? AddToReservation(int idSneaker, int idReservation);
     }
 }
