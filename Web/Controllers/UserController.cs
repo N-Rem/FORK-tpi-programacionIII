@@ -1,65 +1,76 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using Application.Models.Requests;
-using Application.Services;
-using Domain.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    //DataAnnotation Configuran el enrutamiento y el comportamiento de los métodos en una API de ASP.NET Core.
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserServices _userServices;
+        public readonly IUserServices _userServices;
 
         public UserController(IUserServices userServices)
         {
             _userServices = userServices;
         }
 
-        [HttpGet("Users")]
-        public IActionResult GetUsers()
+        [HttpGet("/users")]
+        public IActionResult GetUser()
         {
             return Ok(_userServices.GetUsers());
         }
-        [HttpGet("Clients")]
-        public IActionResult GetClients()
-        {
-            return Ok(_userServices.GetClients());
-        }
-        [HttpGet("Admins")]
-        public IActionResult GetAdmins()
+
+        [HttpGet("/admin")]
+        public IActionResult GetAdmin()
         {
             return Ok(_userServices.GetAdmins());
         }
 
-        [HttpGet("User{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        [HttpGet("/client")]
+        public IActionResult GetClient()
+        {
+            return Ok(_userServices.GetClients());
+        }
+        [HttpGet("/userbyid{id}")]
+        public IActionResult GetUserById([FromRoute] int id)
         {
             return Ok(_userServices.GetById(id));
         }
-        [HttpPost("CreateUser")]
-        public IActionResult CreateUser([FromBody] UserCreateRequest user)
-        {
-            return Ok(_userServices.CreateUser(user));
-        }
 
-        [HttpPut("UpdateUser{id}")]
-        public IActionResult UpdateUser([FromRoute] int id, [FromBody] UserUpdateRequest user)
+        [HttpPost("/Admin")]
+        public IActionResult CreateAdmin([FromBody] UserCreateRequest admin)
         {
-            _userServices.Update(id, user);
+            _userServices.CreateAdmin(admin);
+            return Ok();
+        }
+        [HttpPost("/Client")]
+        public IActionResult CerateClient([FromBody] UserCreateRequest client)
+        {
+            _userServices.CreateClient(client);
             return Ok();
         }
 
-        [HttpDelete("Delete{id}")]
-        public IActionResult DeleteUser([FromRoute] int id)
+
+        [HttpPut("/Update{idUser}")]
+        public IActionResult Update([FromBody] UserCreateRequest user, [FromRoute] int idUser)
+        {
+            _userServices.Update(user, idUser);
+            return Ok();
+        }
+
+
+        [HttpDelete("/Delete{id}")]
+        public IActionResult Delete([FromRoute] int id)
         {
             _userServices.DeleteById(id);
             return Ok();
         }
 
-        
+
     }
 }
