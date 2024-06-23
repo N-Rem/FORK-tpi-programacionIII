@@ -20,6 +20,11 @@ namespace Application.Interfaces
         void Update(int id, UserUpdateRequest userDto);
         void DeleteById(int id);
 
+        //--
+        void CreateAdmin(UserCreateRequest adminDto);
+        void CreateClient(UserCreateRequest clientDto);
+
+
 
 
     }

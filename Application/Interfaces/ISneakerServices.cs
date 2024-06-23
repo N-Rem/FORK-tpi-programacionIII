@@ -10,17 +10,17 @@ namespace Application.Interfaces
 {
     public interface ISneakerServices
     {
-        List<Sneaker> GetSneaker();
+        List<SneakerDto> GetSneaker();
         SneakerDto GetById(int id);
         SneakerDto Create(SneakerDto sneakerDto);
-        void Update(SneakerDto sneakerDto);
+        void Update(SneakerDto sneakerDto, int id);
         void DeleteById(int id);
 
 
-        List<Sneaker> GetByBrand(string brand);
-        List<Sneaker> GetByCategory(string category);
+        List<SneakerDto> GetByBrand(string brand);
+        List<SneakerDto> GetByCategory(string category);
         void Buy(int id);
-        bool CheckAvailableProduct(int id);
+        void BuySneakers(int idReservation);
 
     }
 }
