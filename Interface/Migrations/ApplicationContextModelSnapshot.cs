@@ -25,8 +25,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("State")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -41,11 +42,13 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Brand")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -65,8 +68,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Brand = 0,
-                            Category = 1,
+                            Brand = "Nike",
+                            Category = "Casual",
                             Name = "Air Max",
                             Price = 120,
                             Stock = 50
@@ -74,8 +77,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Brand = 1,
-                            Category = 1,
+                            Brand = "Adidas",
+                            Category = "Casual",
                             Name = "Classic",
                             Price = 100,
                             Stock = 30
@@ -83,8 +86,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            Brand = 0,
-                            Category = 2,
+                            Brand = "Nike",
+                            Category = "Running",
                             Name = "ZoomX",
                             Price = 150,
                             Stock = 20
@@ -92,8 +95,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            Brand = 1,
-                            Category = 2,
+                            Brand = "Adidas",
+                            Category = "Running",
                             Name = "Superstar",
                             Price = 80,
                             Stock = 40
@@ -101,8 +104,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Brand = 1,
-                            Category = 0,
+                            Brand = "Adidas",
+                            Category = "Sports",
                             Name = "Gel-Kayano",
                             Price = 140,
                             Stock = 25
@@ -110,8 +113,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            Brand = 2,
-                            Category = 1,
+                            Brand = "Converse",
+                            Category = "Casual",
                             Name = "Chuck Taylor",
                             Price = 60,
                             Stock = 35
@@ -119,8 +122,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            Brand = 1,
-                            Category = 0,
+                            Brand = "Adidas",
+                            Category = "Sports",
                             Name = "Ultraboost",
                             Price = 180,
                             Stock = 15
@@ -128,8 +131,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            Brand = 0,
-                            Category = 2,
+                            Brand = "Nike",
+                            Category = "Running",
                             Name = "Pegasus",
                             Price = 110,
                             Stock = 45
@@ -137,8 +140,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 9,
-                            Brand = 1,
-                            Category = 2,
+                            Brand = "Adidas",
+                            Category = "Running",
                             Name = "Pegaboot",
                             Price = 110,
                             Stock = 55
@@ -164,8 +167,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -178,7 +182,7 @@ namespace Infrastructure.Migrations
                             EmailAddress = "Ana@example.com",
                             Name = "Ana",
                             Password = "Pass1",
-                            Type = 2
+                            Type = "admin"
                         },
                         new
                         {
@@ -186,7 +190,7 @@ namespace Infrastructure.Migrations
                             EmailAddress = "delfina@example.com",
                             Name = "Delfina",
                             Password = "Pass2",
-                            Type = 2
+                            Type = "admin"
                         },
                         new
                         {
@@ -194,7 +198,7 @@ namespace Infrastructure.Migrations
                             EmailAddress = "juan.doe@example.com",
                             Name = "Juan",
                             Password = "Pass3",
-                            Type = 1
+                            Type = "client"
                         },
                         new
                         {
@@ -202,7 +206,7 @@ namespace Infrastructure.Migrations
                             EmailAddress = "vicky.sosa@example.com",
                             Name = "Victoria",
                             Password = "Pass4",
-                            Type = 1
+                            Type = "client"
                         });
                 });
 
