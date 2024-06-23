@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-
-    public class UserServices: IUserServices
+    //son las funciones que se van a usar en los controllers con su inyeccion
+    public class UserServices : IUserServices
 
     {
         private readonly IRepositoryUser _repositoryUser;
-        public UserServices( IRepositoryUser repositoryUser)
+        public UserServices(IRepositoryUser repositoryUser)
         {
             _repositoryUser = repositoryUser;
         }
-        //CRUD ---- ADMIN
+        //CRUD ---- ADMIN, CLIENT, USERS
         public List<UserDto> GetAdmins()
         {
 
@@ -45,43 +45,50 @@ namespace Application.Services
             var obj = _repositoryUser.GetById(id)
                  ?? throw new Exception("No encontrado");
 
-            var objDto = new UserDto()
-            {
-                Id = obj.Id,
-                Name = obj.Name,
-                EmailAddress= obj.EmailAddress,
-                Type = obj.Type,
-
-            };
+            var objDto = UserDto.Create(obj);
 
             return objDto;
         }
 
-
-        public User CreateUser (UserCreateRequest userDto)
+        public void CreateAdmin(UserCreateRequest adminDto)
         {
-            var user = new User()
+            var Admin = new User()
             {
-                Name = userDto.Name,
-                Password = userDto.Password,
-                EmailAddress = userDto.EmailAddress,
-                Type = userDto.Type,
+                Name = adminDto.Name,
+                Password = adminDto.Password,
+
+                EmailAddress = adminDto.EmailAddress,
+                Type = User.UserType.admin
             };
 
-            _repositoryUser.Add(user);
-           return user;
+
+            _repositoryUser.Add(Admin);
+        }
+        public void CreateClient(UserCreateRequest clientDto)
+        {
+            var Admin = new User()
+            {
+                Name = clientDto.Name,
+                EmailAddress = clientDto.EmailAddress,
+                Password = clientDto.Password,
+                Type = User.UserType.client
+            };
+
+
+            _repositoryUser.Add(Admin);
         }
 
-        public void Update (int id, UserUpdateRequest userDto)
+        public void Update(UserCreateRequest userDto, int idUser)
         {
-            var user = _repositoryUser.GetById(id);
+            var obj = _repositoryUser.GetById(idUser)
+                ?? throw new Exception("User no encotrado");
+            obj.Id = idUser; //¿Como acceder al id del usuario actual?
+            obj.Name = userDto.Name;
+            obj.Password = userDto.Password;
+            obj.EmailAddress = userDto.EmailAddress;
 
-            user.Name = userDto.Name;
-            user.Password = userDto.Password;
-            user.EmailAddress = userDto.EmailAddress;
-            user.Type = userDto.Type;
 
-            _repositoryUser.Update(user);
+            _repositoryUser.Update(obj);
         }
 
         public void DeleteById(int id)
@@ -93,7 +100,6 @@ namespace Application.Services
             }
             _repositoryUser.Delete(obj);
         }
-
 
     }
 }

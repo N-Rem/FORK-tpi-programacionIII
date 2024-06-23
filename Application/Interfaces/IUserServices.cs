@@ -16,8 +16,13 @@ namespace Application.Interfaces
         List<UserDto> GetClients();
         List<UserDto> GetUsers();
         UserDto GetById(int id);
-        User CreateUser(UserCreateRequest userDto);
-        void Update(int id, UserUpdateRequest userDto);
+        void CreateAdmin(UserCreateRequest adminDto);
+        void CreateClient(UserCreateRequest clientDto);
+
+
+
+        void Update(UserCreateRequest userDto, int idUser);
+
         void DeleteById(int id);
 
 
