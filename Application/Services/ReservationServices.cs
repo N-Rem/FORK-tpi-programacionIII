@@ -57,13 +57,7 @@ namespace Application.Services
             var obj = _repositoryReservation.GetById(id)
                 ?? throw new Exception("No encontrado");
 
-            var objDto = new ReservationDto()
-            {
-                Id = obj.Id,
-                State = obj.State,
-                Sneakers = obj.Sneakers,
-                IdUser = obj.IdUser,
-            };
+            var objDto = ReservationDto.Create(obj);
 
             return objDto;
         }

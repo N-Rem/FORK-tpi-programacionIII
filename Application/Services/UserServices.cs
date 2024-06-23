@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Models.Requests;
 using Domain.Entities;
 using Domain.Interface;
 using System;
@@ -15,32 +16,39 @@ namespace Application.Services
 
     {
         private readonly IRepositoryUser _repositoryUser;
-        private readonly IRepositorySneaker _repositorySneaker;
-        private readonly IRepositoryReservation _repositoryReservation;
-        public UserServices( IRepositoryUser repositoryUser, IRepositorySneaker repositorySneaker, IRepositoryReservation repositoryReservation)
+        public UserServices( IRepositoryUser repositoryUser)
         {
             _repositoryUser = repositoryUser;
-            _repositorySneaker = repositorySneaker;
-            _repositoryReservation = repositoryReservation;
         }
         //CRUD ---- ADMIN
-        public List<User> GetAdmins()
+        public List<UserDto> GetAdmins()
         {
 
-            return _repositoryUser.GetAll().Where(user=>user.Type == User.UserType.admin).ToList();
+            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.admin).ToList());
 
         }
 
-        public AdminDto GetById(int id)
+        public List<UserDto> GetClients()
+        {
+
+            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.client).ToList());
+
+        }
+
+        public List<UserDto> GetUsers()
+        {
+            return UserDto.CreateList(_repositoryUser.GetAll());
+        }
+
+        public UserDto GetById(int id)
         {
             var obj = _repositoryUser.GetById(id)
                  ?? throw new Exception("No encontrado");
 
-            var objDto = new AdminDto()
+            var objDto = new UserDto()
             {
                 Id = obj.Id,
                 Name = obj.Name,
-
                 EmailAddress= obj.EmailAddress,
                 Type = obj.Type,
 
@@ -50,34 +58,30 @@ namespace Application.Services
         }
 
 
-        public AdminDto CreateAdmin (AdminDto adminDto)
+        public User CreateUser (UserCreateRequest userDto)
         {
-            var Admin = new User()
+            var user = new User()
             {
-                Name = adminDto.Name,
-                Password = adminDto.Password,
+                Name = userDto.Name,
+                Password = userDto.Password,
+                EmailAddress = userDto.EmailAddress,
+                Type = userDto.Type,
+            };
 
-                EmailAddress = adminDto.EmailAddress,
-                Type = User.UserType.admin 
-                };
-
-
-            _repositoryUser.Add(Admin);
-           return adminDto;
+            _repositoryUser.Add(user);
+           return user;
         }
 
-        public void Update (AdminDto adminDto)
+        public void Update (int id, UserUpdateRequest userDto)
         {
-            var admin = new User()
-            {
-                Id= adminDto.Id,
-                Name = adminDto.Name,
-                Password = adminDto.Password,
+            var user = _repositoryUser.GetById(id);
 
-                EmailAddress = adminDto.EmailAddress,
+            user.Name = userDto.Name;
+            user.Password = userDto.Password;
+            user.EmailAddress = userDto.EmailAddress;
+            user.Type = userDto.Type;
 
-            };
-            _repositoryUser.Update(admin);
+            _repositoryUser.Update(user);
         }
 
         public void DeleteById(int id)
@@ -89,11 +93,6 @@ namespace Application.Services
             }
             _repositoryUser.Delete(obj);
         }
-
-
-
-        
-
 
 
     }

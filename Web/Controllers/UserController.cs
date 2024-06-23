@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Models.Requests;
 using Application.Services;
 using Domain.Interface;
 using Microsoft.AspNetCore.Http;
@@ -11,120 +12,54 @@ namespace Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserServices _adminServices;
-        private readonly IReservationServices _reservationService;
-        private readonly ISneakerServices _sneakerServices;
+        private readonly IUserServices _userServices;
 
-        public UserController(IUserServices adminServices, IReservationServices reservationService, ISneakerServices sneakerService)
+        public UserController(IUserServices userServices)
         {
-            _adminServices = adminServices;
-            _reservationService = reservationService;
-            _sneakerServices = sneakerService;
+            _userServices = userServices;
         }
 
-
-        //Crud Admin
-        [HttpPost("CreateAdmin")]
-        public IActionResult createAdmin([FromBody] AdminDto user)
+        [HttpGet("Users")]
+        public IActionResult GetUsers()
         {
-            return Ok(_adminServices.CreateAdmin(user));
+            return Ok(_userServices.GetUsers());
         }
-
-
-        [HttpGet("getAdmin")]
+        [HttpGet("Clients")]
+        public IActionResult GetClients()
+        {
+            return Ok(_userServices.GetClients());
+        }
+        [HttpGet("Admins")]
         public IActionResult GetAdmins()
         {
-            return Ok(_adminServices.GetAdmins());
+            return Ok(_userServices.GetAdmins());
         }
 
-        [HttpGet("Admin{id}")]
-        public IActionResult GetAdminById([FromRoute] int id)
+        [HttpGet("User{id}")]
+        public IActionResult GetById([FromRoute] int id)
         {
-            return Ok(_adminServices.GetById(id));
+            return Ok(_userServices.GetById(id));
+        }
+        [HttpPost("CreateUser")]
+        public IActionResult CreateUser([FromBody] UserCreateRequest user)
+        {
+            return Ok(_userServices.CreateUser(user));
         }
 
-        [HttpPut("putAdmin")]
-        public IActionResult UpdateAdmin([FromBody] AdminDto admin)
+        [HttpPut("UpdateUser{id}")]
+        public IActionResult UpdateUser([FromRoute] int id, [FromBody] UserUpdateRequest user)
         {
-            _adminServices.Update(admin);
+            _userServices.Update(id, user);
             return Ok();
         }
 
-        [HttpDelete("admin{id}")]
-        public IActionResult DeleteAdmin([FromRoute] int id)
+        [HttpDelete("Delete{id}")]
+        public IActionResult DeleteUser([FromRoute] int id)
         {
-            _adminServices.DeleteById(id);
+            _userServices.DeleteById(id);
             return Ok();
         }
 
-        // Crud Sneaker
-        [HttpPost("CreateSneaker")]
-        public IActionResult CreateSneaker([FromBody] SneakerDto sneaker)
-        {
-            return Ok(_sneakerServices.Create(sneaker));
-        }
-
-
-        [HttpGet("getSneaker")]
-        public IActionResult GetSneaker()
-        {
-            return Ok(_sneakerServices.GetSneaker());
-        }
-
-        [HttpGet("Sneaker{id}")]
-        public IActionResult GetSneakerById([FromRoute] int id)
-        {
-            return Ok(_sneakerServices.GetById(id));
-        }
-
-        [HttpPut("putSneaker")]
-        public IActionResult UpdateAdmin([FromBody] SneakerDto sneaker)
-        {
-            _sneakerServices.Update(sneaker);
-            return Ok();
-        }
-
-        [HttpDelete("sneaker{id}")]
-        public IActionResult DeleteSneaker([FromRoute] int id)
-        {
-            _sneakerServices.DeleteById(id);
-            return Ok();
-        }
-
-        [HttpGet("Brand{brand}")]
-
-        public IActionResult GetByBrand([FromRoute] string brand)
-        {
-            return Ok(_sneakerServices.GetByBrand(brand));
-        }
-
-        [HttpGet("Category{category}")]
-        public IActionResult GetByCategory(string category)
-        {
-            return Ok(_sneakerServices.GetByCategory(category));
-        }
-
-        //Crud Reservation
-
-        [HttpGet("Reservation")]
-        public IActionResult GetReservations()
-        {
-            return Ok(_reservationService.GetAll());
-        }
-
-        [HttpGet("ReservationId{id}")]
-        public IActionResult GetReservationById([FromRoute] int id)
-        {
-            return Ok(_reservationService.GetById(id));
-        }
-
-        [HttpDelete("deleteReservation{id}")]
-        public IActionResult DeleteReservation([FromRoute] int id)
-        {
-            _reservationService.Delete(id);
-            return Ok();
-        }
-
-
+        
     }
 }
