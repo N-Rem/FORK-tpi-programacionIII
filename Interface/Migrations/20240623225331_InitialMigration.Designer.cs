@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240620234901_InitialMigration")]
+    [Migration("20240623225331_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -28,7 +28,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsFinalized")
+                    b.Property<int>("State")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -36,26 +36,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("IdUser");
 
                     b.ToTable("Reservations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdUser = 3,
-                            IsFinalized = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IdUser = 4,
-                            IsFinalized = false
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IdUser = 5,
-                            IsFinalized = false
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Sneaker", b =>
@@ -64,13 +44,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Brand")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Category")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -90,8 +68,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Brand = "Nike",
-                            Category = "Sports",
+                            Brand = 0,
+                            Category = 1,
                             Name = "Air Max",
                             Price = 120,
                             Stock = 50
@@ -99,8 +77,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Brand = "Adidas",
-                            Category = "Casual",
+                            Brand = 1,
+                            Category = 1,
                             Name = "Classic",
                             Price = 100,
                             Stock = 30
@@ -108,8 +86,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            Brand = "Nike",
-                            Category = "Running",
+                            Brand = 0,
+                            Category = 2,
                             Name = "ZoomX",
                             Price = 150,
                             Stock = 20
@@ -117,8 +95,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            Brand = "Adidas",
-                            Category = "Casual",
+                            Brand = 1,
+                            Category = 2,
                             Name = "Superstar",
                             Price = 80,
                             Stock = 40
@@ -126,8 +104,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Brand = "Adidas",
-                            Category = "Running",
+                            Brand = 1,
+                            Category = 0,
                             Name = "Gel-Kayano",
                             Price = 140,
                             Stock = 25
@@ -135,8 +113,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            Brand = "Converse",
-                            Category = "Casual",
+                            Brand = 2,
+                            Category = 1,
                             Name = "Chuck Taylor",
                             Price = 60,
                             Stock = 35
@@ -144,8 +122,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            Brand = "Adidas",
-                            Category = "Running",
+                            Brand = 1,
+                            Category = 0,
                             Name = "Ultraboost",
                             Price = 180,
                             Stock = 15
@@ -153,11 +131,20 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            Brand = "Nike",
-                            Category = "Sports",
+                            Brand = 0,
+                            Category = 2,
                             Name = "Pegasus",
                             Price = 110,
                             Stock = 45
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = 1,
+                            Category = 2,
+                            Name = "Pegaboot",
+                            Price = 110,
+                            Stock = 55
                         });
                 });
 
@@ -171,9 +158,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsClient")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -182,6 +166,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -192,41 +179,33 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             EmailAddress = "Ana@example.com",
-                            IsClient = false,
                             Name = "Ana",
-                            Password = "Pass1"
+                            Password = "Pass1",
+                            Type = 2
                         },
                         new
                         {
                             Id = 2,
                             EmailAddress = "delfina@example.com",
-                            IsClient = false,
                             Name = "Delfina",
-                            Password = "Pass2"
+                            Password = "Pass2",
+                            Type = 2
                         },
                         new
                         {
                             Id = 3,
                             EmailAddress = "juan.doe@example.com",
-                            IsClient = true,
                             Name = "Juan",
-                            Password = "Pass3"
+                            Password = "Pass3",
+                            Type = 1
                         },
                         new
                         {
                             Id = 4,
                             EmailAddress = "vicky.sosa@example.com",
-                            IsClient = true,
                             Name = "Victoria",
-                            Password = "Pass4"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            EmailAddress = "lautaro.rb@example.com",
-                            IsClient = true,
-                            Name = "Lautaro",
-                            Password = "Pass5"
+                            Password = "Pass4",
+                            Type = 1
                         });
                 });
 

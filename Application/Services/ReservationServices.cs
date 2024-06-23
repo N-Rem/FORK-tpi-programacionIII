@@ -12,26 +12,30 @@ using System.Threading.Tasks;
 namespace Application.Services
 {
     public class ReservationServices : IReservationServices
+
     {
+        private readonly IRepositoryUser _repositoryUser;
         private readonly IRepositoryReservation _repositoryReservation;
         private readonly IRepositorySneaker _repositorySneaker;
-        public ReservationServices (IRepositoryReservation repositoryReservation, IRepositorySneaker repositorySneaker)
+        public ReservationServices(IRepositoryReservation repositoryReservation, IRepositorySneaker repositorySneaker, IRepositoryUser repositoryUser)
         {
             _repositoryReservation = repositoryReservation;
             _repositorySneaker = repositorySneaker;
+            _repositoryUser = repositoryUser;
         }
 
         //Crud reservation
-        public ReservationDto Create(ReservationDto reservation)
+        public void Create(int idUser)
         {
+            var user = _repositoryUser.GetById(idUser)
+                ?? throw new Exception("Usuario no encontrado");
             var newReservation = new Reservation()
             {
-                Id = reservation.Id,
-                IdUser = reservation.IdUser,
+                IdUser = idUser,
+                User = user,
                 State = Reservation.ReservationState.Active,
             };
             _repositoryReservation.Add(newReservation);
-            return reservation;
         }
 
         public void Delete(int id)
@@ -45,11 +49,11 @@ namespace Application.Services
             _repositoryReservation.Delete(obj);
         }
 
-        public List<Reservation> GetAll()
+        public List<ReservationDto> GetAll()
         {
             var list = _repositoryReservation.GetAll();
 
-            return list;
+            return ReservationDto.CreateList(list);
         }
 
         public ReservationDto GetById(int id)
@@ -75,13 +79,16 @@ namespace Application.Services
 
 
 
-        public List<Sneaker> AddToReservation(int idSneaker, int idReservation)
+        public List<SneakerDto>? AddToReservation(int idSneaker, int idReservation)
         {
             var obj = _repositorySneaker.GetById(idSneaker)
-                ?? throw new Exception("");
-           
-            return (List<Sneaker>)_repositoryReservation.AddToReservation(obj, idReservation);
-           
+                ?? throw new Exception("Sneaker no encontrada");
+
+            if (_repositorySneaker.CheckAvailableProduct(obj))
+            {
+                return SneakerDto.CreateList(_repositoryReservation.AddToReservation(obj, idReservation));
+            }
+            throw new Exception("No hay Stock");
         }
 
 

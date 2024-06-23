@@ -60,7 +60,6 @@ namespace Infrastructure.Data
             //Crea primeos datos en la base de datos.
             modelBuilder.Entity<User>().HasData(CreateUserSeedData());
             modelBuilder.Entity<Sneaker>().HasData(CreateSneakerSeedData());
-            modelBuilder.Entity<Reservation>().HasData(CreateReservationSeedData());
 
         }
 
@@ -72,7 +71,6 @@ namespace Infrastructure.Data
             new User { Id = 2, Name = "Delfina", Password = "Pass2", EmailAddress = "delfina@example.com", Type = User.UserType.admin },
             new User { Id = 3, Name = "Juan", Password = "Pass3", EmailAddress = "juan.doe@example.com", Type = User.UserType.client  },
             new User { Id = 4, Name = "Victoria", Password = "Pass4", EmailAddress = "vicky.sosa@example.com", Type = User.UserType.client },
-            new User { Id = 5, Name = "Lautaro", Password = "Pass5", EmailAddress = "lautaro.rb@example.com", Type = User.UserType.client },
             };
         }
 
@@ -88,18 +86,10 @@ namespace Infrastructure.Data
             new Sneaker { Id = 6, Name = "Chuck Taylor", Brand = Sneaker.SneakerBrand.Converse, Price = 60, Category = Sneaker.SneakerCategory.Casual, Stock = 35 },
             new Sneaker { Id = 7, Name = "Ultraboost", Brand = Sneaker.SneakerBrand.Adidas, Price = 180, Category = Sneaker.SneakerCategory.Sports, Stock = 15 },
             new Sneaker { Id = 8, Name = "Pegasus", Brand = Sneaker.SneakerBrand.Nike, Price = 110, Category = Sneaker.SneakerCategory.Running, Stock = 45 },
+            new Sneaker { Id = 9, Name = "Pegaboot", Brand = Sneaker.SneakerBrand.Adidas, Price = 110, Category = Sneaker.SneakerCategory.Running, Stock = 55 },
             };
         }
 
-        private Reservation[] CreateReservationSeedData()
-        {
-            //Crea reservaciones sin su lista de Sneaker
-            return new Reservation[]
-            {
-                new Reservation { Id = 1, IdUser = 3, State = Reservation.ReservationState.Active },
-                new Reservation { Id = 2, IdUser = 4, State = Reservation.ReservationState.Active },
-                new Reservation { Id = 3, IdUser = 5, State = Reservation.ReservationState.Active },
-            };            
-        }
+                   
     }
 }

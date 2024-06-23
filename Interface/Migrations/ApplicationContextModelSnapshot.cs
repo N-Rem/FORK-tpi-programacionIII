@@ -33,26 +33,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("IdUser");
 
                     b.ToTable("Reservations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdUser = 3,
-                            State = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IdUser = 4,
-                            State = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IdUser = 5,
-                            State = 0
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Sneaker", b =>
@@ -153,6 +133,15 @@ namespace Infrastructure.Migrations
                             Name = "Pegasus",
                             Price = 110,
                             Stock = 45
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = 1,
+                            Category = 2,
+                            Name = "Pegaboot",
+                            Price = 110,
+                            Stock = 55
                         });
                 });
 
@@ -213,14 +202,6 @@ namespace Infrastructure.Migrations
                             EmailAddress = "vicky.sosa@example.com",
                             Name = "Victoria",
                             Password = "Pass4",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            EmailAddress = "lautaro.rb@example.com",
-                            Name = "Lautaro",
-                            Password = "Pass5",
                             Type = 1
                         });
                 });
