@@ -24,25 +24,25 @@ namespace Application.Services
         public List<UserDto> GetAdmins()
         {
 
-            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.admin).ToList());
+            return UserDto.CreateList(_repositoryUser.GetAllUser().Where(user => user.Type == User.UserType.admin).ToList());
 
         }
 
         public List<UserDto> GetClients()
         {
 
-            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.client).ToList());
+            return UserDto.CreateList(_repositoryUser.GetAllUser().Where(user => user.Type == User.UserType.client).ToList());
 
         }
 
         public List<UserDto> GetUsers()
         {
-            return UserDto.CreateList(_repositoryUser.GetAll());
+            return UserDto.CreateList(_repositoryUser.GetAllUser());
         }
 
         public UserDto GetById(int id)
         {
-            var obj = _repositoryUser.GetById(id)
+            var obj = _repositoryUser.GetUserById(id)
                  ?? throw new Exception("No encontrado");
 
             var objDto = UserDto.Create(obj);

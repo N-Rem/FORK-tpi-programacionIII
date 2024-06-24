@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         //de uno a muchos
         [Required]
-        public ICollection<Sneaker> Sneakers { get; set; }
+        public ICollection<Sneaker> Sneakers { get; set; } = new List<Sneaker>();
 
         [Required]
         [ForeignKey(("IdUser"))]

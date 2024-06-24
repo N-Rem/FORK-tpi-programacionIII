@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,16 @@ namespace Infrastructure.Data
         public RepositoryReservation(ApplicationContext context) : base(context)
         {
             _context = context;
+        }
+
+        public ICollection<Reservation> GetAllReservation()
+        {
+            return _context.Reservations.Include(r=>r.User).Include(r=>r.Sneakers).ToList();
+        }
+
+        public Reservation? GetReservationById(int id)
+        {
+            return _context.Reservations.Include(r=>r.User).Include(r=>r.Sneakers).FirstOrDefault(r => r.Id == id);
         }
 
 
