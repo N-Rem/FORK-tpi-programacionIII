@@ -21,22 +21,26 @@ namespace Infrastructure.Data
 
         }
 
-            //---Fuent API---
+        //---Fuent API---
+        // Este método (OnModelCreating) se usa para definir cómo se deben mapear las entidades del dominio a las tablas de la base de datos
+        // y establecer sus relaciones, conversiones (el enum a cadena) y datos iniciales (Seed Data).
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Cardinalidad, relación muchos a muchos entre Reservation y Sneaker 
+            //Cardinalidad, Relación muchos a muchos entre Reservation y Sneaker 
             modelBuilder.Entity<Reservation>()
-                //de muchos a muchos
                 .HasMany(x => x.Sneakers)
                 .WithMany();
 
-
-            //relacion entre reservation y user
+            // Relación uno a muchos entre Reservation y User
             modelBuilder.Entity<Reservation>()
                 //de uno a muchos, user puede tener muchas reservaciones
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reservations)
                 .HasForeignKey(r => r.IdUser);
+
+            //has many: Tiene muchos --has one: tiene uno -- whith many: con muchos -- has foreignkey: tiene una Fkey
+
+
 
             // ---Configura las propiedades enum para almacenarse como cadenas---
             modelBuilder.Entity<Sneaker>()
@@ -57,7 +61,7 @@ namespace Infrastructure.Data
 
 
 
-            //Crea primeos datos en la base de datos.
+            //--Crea primeos datos en la base de datos.--
             modelBuilder.Entity<User>().HasData(CreateUserSeedData());
             modelBuilder.Entity<Sneaker>().HasData(CreateSneakerSeedData());
 

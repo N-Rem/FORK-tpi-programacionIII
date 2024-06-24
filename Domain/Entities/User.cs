@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//comando Update-Database
-// Add_Migration AddXXXXXX
+// 1ro Add_Migration AddXXXXXX
 //Add-Migration InitialMigration -Context ApplicationContext(primera migracion, Se crea la Base de datos con el ORM)
+// 2do comando Update-Database
 namespace Domain.Entities
 {
     public class User
     {
+        //Data annotation o decoradores, cómo se deben crear y relacionar las tablas en la base de datos.
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
