@@ -11,6 +11,7 @@ using static Domain.Entities.User;
 
 namespace Application.Models
 {
+    //Las DTO nos sirver para pasar datos a los repositorys de manera mas facil y comoda. 
     public class UserDto
     {
         public int Id { get; set; }
