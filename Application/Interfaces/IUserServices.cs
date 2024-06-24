@@ -16,6 +16,8 @@ namespace Application.Interfaces
         List<UserDto> GetClients();
         List<UserDto> GetUsers();
         UserDto GetById(int id);
+        List<ReservationDto> GetAllReservationUser(int idUser);
+
         void CreateAdmin(UserCreateRequest adminDto);
         void CreateClient(UserCreateRequest clientDto);
 

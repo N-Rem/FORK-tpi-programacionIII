@@ -112,7 +112,10 @@ namespace Application.Services
         {
             var reservation = _repositoryReservation.GetById(idReservation)
                 ?? throw new Exception("no se encontro la reservacion");
-
+            if(reservation.State == Reservation.ReservationState.Finalized)
+            {
+                throw new Exception("La reservacion esta finalizada");
+            }
             foreach (var sneaker in reservation.Sneakers)
             {
                 Buy(sneaker.Id);

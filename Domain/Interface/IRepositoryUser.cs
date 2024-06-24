@@ -11,7 +11,6 @@ namespace Domain.Interface
     // Por eso los contratos de acceso a datos (intrefaces) son parte del Domain, no de la Infraestructura.
     public interface IRepositoryUser : IRepositoryBase<User>
     {
-        ICollection<User> GetAllUser();
-        User? GetUserById(int id);
+        ICollection<Reservation> GetAllReservationUser(int idUser);
     }
 }

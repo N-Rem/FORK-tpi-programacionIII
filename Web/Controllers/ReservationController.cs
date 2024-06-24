@@ -40,7 +40,7 @@ namespace Web.Controllers
             _reservationService.FinalizedReservation(id);
             return Ok();
         }
-        [HttpPut("IdSneaker{idSneaker}")]
+        [HttpPut("AddSneaker{idSneaker}")]
         public IActionResult AddToReservation([FromRoute] int idSneaker, [FromQuery] int idReservation)
         {
             _reservationService.AddToReservation(idSneaker, idReservation);
