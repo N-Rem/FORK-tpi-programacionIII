@@ -11,7 +11,7 @@ namespace Domain.Interface
     {
         ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId);
         void FinalizedReservation(Reservation reservation);
-        ICollection<Reservation> GetAllReservation();
+        ICollection<Reservation>? GetAllReservation();
         Reservation? GetReservationById(int id);
     }
 }

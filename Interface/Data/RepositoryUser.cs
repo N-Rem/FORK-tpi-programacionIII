@@ -16,13 +16,12 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
-        public ICollection<User> GetAllUser()
+        
+        public ICollection<Reservation>? GetAllReservationUser(int idUser)
         {
-            return _context.users.Include(u=>u.Reservations).ToList();
-        }
-        public User? GetUserById(int id)
-        {
-            return _context.users.Include(u => u.Reservations).FirstOrDefault(r => r.Id == id);
+            var user = _context.users.FirstOrDefault(u => u.Id == idUser)
+                 ?? throw new Exception("Usuario no encontrado");
+            return user.Reservations;
         }
 
     }

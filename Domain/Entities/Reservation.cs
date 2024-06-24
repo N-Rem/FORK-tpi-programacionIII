@@ -14,16 +14,17 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int IdUser { get; set; }
 
         public ReservationState State { get; set; }
 
         //de uno a muchos
-        [Required]
+        //[Required]
         public ICollection<Sneaker> Sneakers { get; set; } = new List<Sneaker>();
 
         [Required]
-        [ForeignKey(("IdUser"))]
+        public int IdUser { get; set; }
+        [Required]
+        [ForeignKey("IdUser")]
         public User User { get; set; }
 
 

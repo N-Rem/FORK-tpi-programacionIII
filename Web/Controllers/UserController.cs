@@ -36,6 +36,14 @@ namespace Web.Controllers
         {
             return Ok(_userServices.GetClients());
         }
+
+        [HttpGet("/AllReservationUser{idUser}")]
+        public IActionResult GetAllReservationUser([FromRoute]int idUser)
+        {
+            return Ok(_userServices.GetAllReservationUser(idUser));
+        }
+
+
         [HttpGet("/userbyid{id}")]
         public IActionResult GetUserById([FromRoute] int id)
         {

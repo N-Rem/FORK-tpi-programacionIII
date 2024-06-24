@@ -17,29 +17,35 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public ICollection<Reservation> GetAllReservation()
+        public ICollection<Reservation>? GetAllReservation()
         {
-            return _context.Reservations.Include(r=>r.User).Include(r=>r.Sneakers).ToList();
+            var listReservation = _context.Reservations.Include(r => r.Sneakers).ToList()
+            ?? throw new Exception("no se econtraron Reservasiones");
+
+            return listReservation;
         }
 
         public Reservation? GetReservationById(int id)
         {
-            return _context.Reservations.Include(r=>r.User).Include(r=>r.Sneakers).FirstOrDefault(r => r.Id == id);
+            return _context.Reservations.Include(r=>r.Sneakers).FirstOrDefault(r => r.Id == id);
         }
 
 
         public ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId)
         {
-            var Reservation = _context.Reservations.FirstOrDefault(r => r.Id == reservationId);
-            if (Reservation == null)
+            
+            var reservation = _context.Reservations.FirstOrDefault(r => r.Id == reservationId)           
+                ??throw new Exception("no se encontro la Reservation");
+           
+            if (reservation.State == Reservation.ReservationState.Finalized)
             {
-                throw new Exception("not found Reservation");
+                throw new Exception("La reservacion esta finalizada");
             }
 
-            Reservation.Sneakers.Add(sneaker);
+            reservation.Sneakers.Add(sneaker);
             _context.SaveChanges();
 
-            return Reservation.Sneakers;
+            return reservation.Sneakers;
 
         }
 
