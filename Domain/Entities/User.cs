@@ -37,9 +37,9 @@ namespace Domain.Entities
         [Required]
         public UserType Type { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-        //¿User tendria que tener una lista de reservations?
+        //Borrar la lista de reservaciones y poner una funcion para conseguir esta lista en una request?? 
 
         public enum UserType
         {

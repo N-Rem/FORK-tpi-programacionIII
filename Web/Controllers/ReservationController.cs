@@ -34,7 +34,7 @@ namespace Web.Controllers
             return Ok();
         }
 
-        [HttpPut("IdReservation{id}")]
+        [HttpPut("IdFinalizedReservation{id}")]
         public IActionResult FinalizedReservation([FromRoute] int id)
         {
             _reservationService.FinalizedReservation(id);

@@ -51,19 +51,17 @@ namespace Application.Services
 
         public List<ReservationDto> GetAll()
         {
-            var list = _repositoryReservation.GetAll();
+            var list = _repositoryReservation.GetAllReservation();
 
             return ReservationDto.CreateList(list);
         }
 
         public ReservationDto GetById(int id)
         {
-            var obj = _repositoryReservation.GetById(id)
+            var obj = _repositoryReservation.GetReservationById(id)
                 ?? throw new Exception("No encontrado");
 
-            var objDto = ReservationDto.Create(obj);
-
-            return objDto;
+            return ReservationDto.Create(obj);
         }
 
         //----------------
