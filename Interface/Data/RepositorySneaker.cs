@@ -33,10 +33,5 @@ namespace Infrastructure.Data
             sneaker.Stock = sneaker.Stock - 1;
             _context.SaveChanges();
         }
-
-        public bool CheckAvailableProduct(Sneaker sneaker)
-        {
-            return sneaker.Stock > 0;
-        }
     }
 }

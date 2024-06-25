@@ -101,16 +101,19 @@ namespace Application.Services
         {
             var obj = _repositorySneaker.GetById(id)
                 ?? throw new Exception("No se encontro el producto");
-            if (_repositorySneaker.CheckAvailableProduct(obj))
+            if (obj.Stock > 0)
             {
                 _repositorySneaker.Buy(obj);
             }
-            throw new Exception("No hay stock");
+            else
+            {
+                throw new Exception("No hay stock");
+            }
         }
 
         public void BuySneakers(int idReservation)
         {
-            var reservation = _repositoryReservation.GetById(idReservation)
+            var reservation = _repositoryReservation.GetReservationById(idReservation)
                 ?? throw new Exception("no se encontro la reservacion");
             if(reservation.State == Reservation.ReservationState.Finalized)
             {
@@ -120,6 +123,7 @@ namespace Application.Services
             {
                 Buy(sneaker.Id);
             }
+            _repositoryReservation.FinalizedReservation(reservation);
             //No estoy seguro si va a funcionar con si algunas zapatillas no tienen stock y otras si. 
         }
 
