@@ -40,6 +40,7 @@ namespace Application.Models
             {
                 foreach (var sneaker in reservation.Sneakers)
                 {
+                    //!Null REFERNCIA 
                     dto.Sneakers.Add(SneakerDto.Create(sneaker));
                 }
             }

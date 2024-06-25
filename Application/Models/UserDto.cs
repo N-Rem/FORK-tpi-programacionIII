@@ -49,14 +49,14 @@ namespace Application.Models
             dto.EmailAddress = user.EmailAddress;
             dto.Id = user.Id;
             dto.Type = user.Type;
-
-            if (user.Reservations != null)
-            {
-                foreach (var reservation in user.Reservations)
-                {
-                    dto.Reservations.Add(ReservationDto.Create(reservation));
-                }
-            }
+            user.Reservations = null;
+            //if (user.Reservations != null)
+            //{
+            //    foreach (var reservation in user.Reservations)
+            //    {
+            //        dto.Reservations.Add(ReservationDto.Create(reservation));
+            //    }
+            //}
 
             return dto;
         }

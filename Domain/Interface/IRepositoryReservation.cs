@@ -9,7 +9,7 @@ namespace Domain.Interface
 {
     public interface IRepositoryReservation : IRepositoryBase<Reservation>
     {
-        ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId);
+        void AddToReservation(Sneaker sneaker, int reservationId);
         void FinalizedReservation(Reservation reservation);
         ICollection<Reservation>? GetAllReservation();
         Reservation? GetReservationById(int id);
