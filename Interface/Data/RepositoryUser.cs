@@ -19,9 +19,10 @@ namespace Infrastructure.Data
         
         public ICollection<Reservation>? GetAllReservationUser(int idUser)
         {
-            var user = _context.users.FirstOrDefault(u => u.Id == idUser)
-                 ?? throw new Exception("Usuario no encontrado");
-            return user.Reservations;
+            //se cambia la manerea de traer la lista de todas las reservaciones del usuario. 
+            var reservations = _context.Reservations.Where(r => r.IdUser == idUser).ToList()
+                 ?? throw new Exception("No se encontro reservas del usuario");
+            return reservations;
         }
 
     }

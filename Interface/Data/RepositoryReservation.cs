@@ -40,7 +40,7 @@ namespace Infrastructure.Data
         }
 
 
-        public ICollection<Sneaker> AddToReservation(Sneaker sneaker, int reservationId)
+        public void AddToReservation(Sneaker sneaker, int reservationId)
         {
             
             var reservation = _context.Reservations.FirstOrDefault(r => r.Id == reservationId)           
@@ -54,7 +54,6 @@ namespace Infrastructure.Data
             reservation.Sneakers.Add(sneaker);
             _context.SaveChanges();
 
-            return reservation.Sneakers;
 
         }
 
