@@ -71,10 +71,10 @@ namespace Infrastructure.Data
         {
             return new User[]
             {
-            new User { Id = 1, Name = "Ana", Password = "Pass1", EmailAddress = "Ana@example.com", Type = User.UserType.admin },
-            new User { Id = 2, Name = "Delfina", Password = "Pass2", EmailAddress = "delfina@example.com", Type = User.UserType.admin },
-            new User { Id = 3, Name = "Juan", Password = "Pass3", EmailAddress = "juan.doe@example.com", Type = User.UserType.client  },
-            new User { Id = 4, Name = "Victoria", Password = "Pass4", EmailAddress = "vicky.sosa@example.com", Type = User.UserType.client },
+            new User { Id = 1, Name = "Ana", Password = "Pass1", EmailAddress = "Ana@example.com", Type = User.UserType.Admin },
+            new User { Id = 2, Name = "Delfina", Password = "Pass2", EmailAddress = "delfina@example.com", Type = User.UserType.Admin },
+            new User { Id = 3, Name = "Juan", Password = "Pass3", EmailAddress = "juan.doe@example.com", Type = User.UserType.Client  },
+            new User { Id = 4, Name = "Victoria", Password = "Pass4", EmailAddress = "vicky.sosa@example.com", Type = User.UserType.Client },
             };
         }
 

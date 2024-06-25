@@ -24,14 +24,14 @@ namespace Application.Services
         public List<UserDto> GetAdmins()
         {
 
-            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.admin).ToList());
+            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.Admin).ToList());
 
         }
 
         public List<UserDto> GetClients()
         {
 
-            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.client).ToList());
+            return UserDto.CreateList(_repositoryUser.GetAll().Where(user => user.Type == User.UserType.Client).ToList());
 
         }
 
@@ -58,7 +58,7 @@ namespace Application.Services
                 Password = adminDto.Password,
 
                 EmailAddress = adminDto.EmailAddress,
-                Type = User.UserType.admin
+                Type = User.UserType.Admin
             };
 
 
@@ -71,7 +71,7 @@ namespace Application.Services
                 Name = clientDto.Name,
                 EmailAddress = clientDto.EmailAddress,
                 Password = clientDto.Password,
-                Type = User.UserType.client
+                Type = User.UserType.Client
             };
 
 

@@ -25,5 +25,11 @@ namespace Infrastructure.Data
             return reservations;
         }
 
+        public User GetByEmail(string email)
+        {
+            var user = _context.users.FirstOrDefault(u => u.EmailAddress == email);
+            return user;
+        }
+
     }
 }
