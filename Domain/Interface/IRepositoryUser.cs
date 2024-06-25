@@ -12,5 +12,6 @@ namespace Domain.Interface
     public interface IRepositoryUser : IRepositoryBase<User>
     {
         ICollection<Reservation> GetAllReservationUser(int idUser);
+        User GetByEmail(string email);
     }
 }
