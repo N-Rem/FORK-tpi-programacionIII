@@ -89,7 +89,7 @@ namespace Application.Services
             var sneaker = _repositorySneaker.GetById(idSneaker)
                 ?? throw new Exception("Sneaker no encontrada");
 
-            if (_repositorySneaker.CheckAvailableProduct(sneaker))
+            if (sneaker.Stock>0)
             { //agregar a la lista de sneaker la nueva sneaker.
                 _repositoryReservation.AddToReservation(sneaker, idReservation);
 

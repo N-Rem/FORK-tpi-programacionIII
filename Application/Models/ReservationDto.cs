@@ -36,15 +36,15 @@ namespace Application.Models
             dto.User = UserDto.Create(reservation.User);
 
 
-            if (reservation.Sneakers != null)
-            {
-                foreach (var sneaker in reservation.Sneakers)
-                {
-                    //!Null REFERNCIA 
-                    dto.Sneakers.Add(SneakerDto.Create(sneaker));
-                }
-            }
-
+            //if (reservation.Sneakers != null)
+            //{
+            //    foreach (var sneaker in reservation.Sneakers)
+            //    {
+            //        //!Null REFERNCIA 
+            //        dto.Sneakers.Add(SneakerDto.Create(sneaker));
+            //    }
+            //}
+            dto.Sneakers=SneakerDto.CreateList(reservation.Sneakers);
             return dto;
         }
 

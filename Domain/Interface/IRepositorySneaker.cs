@@ -12,6 +12,5 @@ namespace Domain.Interface
         ICollection<Sneaker>? GetByBrand(string brand);
         ICollection<Sneaker>? GetByCategory(string category);
         void Buy(Sneaker sneaker);
-        bool CheckAvailableProduct(Sneaker sneaker);
     }
 }
