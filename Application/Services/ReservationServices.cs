@@ -35,7 +35,7 @@ namespace Application.Services
                 User = user,
                 State = Reservation.ReservationState.Active,
             };
-            _repositoryReservation.Add(newReservation);
+            _repositoryReservation.AddReservation(newReservation);
         }
 
         public void Delete(int id)
@@ -51,7 +51,8 @@ namespace Application.Services
 
         public List<ReservationDto> GetAll()
         {
-            var list = _repositoryReservation.GetAllReservation();
+            var list = _repositoryReservation.GetAllReservation()
+            ?? throw new Exception("No encontrado");
 
             return ReservationDto.CreateList(list);
         }

@@ -35,6 +35,11 @@ namespace Application.Models
 
         public ICollection<ReservationDto> Reservations { get; set; }
 
+        public UserDto()
+        {
+            Reservations = new List<ReservationDto>();
+        }
+
         public static UserDto Create(User user)
         {
             var dto = new UserDto();
@@ -58,7 +63,7 @@ namespace Application.Models
 
         public static List<UserDto> CreateList(IEnumerable<User> user)
         {
-            List<UserDto> listDto = [];
+            var listDto = new List<UserDto>();
             foreach (var u in user)
             {
                 listDto.Add(Create(u));

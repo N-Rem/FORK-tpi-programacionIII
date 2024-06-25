@@ -20,9 +20,9 @@ namespace Application.Models
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ReservationState State { get; set; }
 
-        public UserDto User { get; set; }
+        public UserDto? User { get; set; }
 
-        public ICollection<SneakerDto> Sneakers { get; set; }
+        public ICollection<SneakerDto>? Sneakers { get; set; }
 
 
 

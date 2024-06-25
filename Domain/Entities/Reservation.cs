@@ -22,9 +22,9 @@ namespace Domain.Entities
         public ICollection<Sneaker> Sneakers { get; set; } = new List<Sneaker>();
 
         [Required]
+        [ForeignKey("IdUser")]
         public int IdUser { get; set; }
         [Required]
-        [ForeignKey("IdUser")]
         public User User { get; set; }
 
 

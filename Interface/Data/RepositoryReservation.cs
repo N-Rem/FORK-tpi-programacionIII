@@ -17,6 +17,15 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+        public Reservation AddReservation(Reservation reservation)
+        {
+            var user = _context.users.FirstOrDefault(r => r.Id == reservation.IdUser);
+            reservation.User = user;
+            _context.Reservations.Add(reservation);
+            _context.SaveChanges();
+            return reservation;
+        }
+        
         public ICollection<Reservation>? GetAllReservation()
         {
             var listReservation = _context.Reservations.Include(r => r.Sneakers).ToList()

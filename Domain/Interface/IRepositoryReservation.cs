@@ -13,5 +13,6 @@ namespace Domain.Interface
         void FinalizedReservation(Reservation reservation);
         ICollection<Reservation>? GetAllReservation();
         Reservation? GetReservationById(int id);
+        Reservation AddReservation(Reservation reservation);
     }
 }
