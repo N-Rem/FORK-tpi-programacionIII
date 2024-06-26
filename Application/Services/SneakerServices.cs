@@ -97,35 +97,6 @@ namespace Application.Services
             return SneakerDto.CreateList(listObj);
         }
 
-        public void Buy(int id)
-        {
-            var obj = _repositorySneaker.GetById(id)
-                ?? throw new Exception("No se encontro el producto");
-            if (obj.Stock > 0)
-            {
-                _repositorySneaker.Buy(obj);
-            }
-            else
-            {
-                throw new Exception("No hay stock");
-            }
-        }
-
-        public void BuySneakers(int idReservation)
-        {
-            var reservation = _repositoryReservation.GetReservationById(idReservation)
-                ?? throw new Exception("no se encontro la reservacion");
-            if(reservation.State == Reservation.ReservationState.Finalized)
-            {
-                throw new Exception("La reservacion esta finalizada");
-            }
-            foreach (var sneaker in reservation.Sneakers)
-            {
-                Buy(sneaker.Id);
-            }
-            _repositoryReservation.FinalizedReservation(reservation);
-            //No estoy seguro si va a funcionar con si algunas zapatillas no tienen stock y otras si. 
-        }
-
+       
     }
 }

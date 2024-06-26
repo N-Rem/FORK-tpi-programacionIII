@@ -1,5 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Models.Requests;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -58,14 +60,14 @@ namespace Web.Controllers
             _reservationService.FinalizedReservation(id);
             return Ok();
         }
-        [HttpPut("AddSneakerToResrevation{idSneaker}")]
-        public IActionResult AddToReservation([FromRoute] int idSneaker, [FromQuery] int idReservation)
+        [HttpPut("AddSneakerToResrevation")]
+        public IActionResult AddToReservation([FromBody] ReservationSneakerRequest rsDto)
         {
             //Solo ´puede agregar zapatillas el cliente.
             var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
             if (userRole != "Client")
                 return Forbid();
-            _reservationService.AddToReservation(idSneaker, idReservation);
+            _reservationService.AddToReservation(rsDto);
             return Ok();
         }
 
@@ -76,7 +78,15 @@ namespace Web.Controllers
             return Ok();
         }
 
-
+        [HttpPut("BuyReservation {idReservation}")]
+        public IActionResult BuyReservation([FromRoute] int idReservation)
+        {
+            var userRole = User.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.Role)?.Value;
+            if(userRole!= "Client")
+                return Forbid();
+            _reservationService.BuyReservation(idReservation);
+            return Ok();
+        }
 
     }
 }

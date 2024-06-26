@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Resources;
+using Application.Models.Requests;
 
 namespace Application.Services
 {
@@ -84,20 +85,52 @@ namespace Application.Services
 
 
 
-        public List<SneakerDto>? AddToReservation(int idSneaker, int idReservation)
+        public List<SneakerDto>? AddToReservation(ReservationSneakerRequest rsDto)
         {
-            var sneaker = _repositorySneaker.GetById(idSneaker)
+            var sneaker = _repositorySneaker.GetById(rsDto.SneakerId)
                 ?? throw new Exception("Sneaker no encontrada");
 
-            if (sneaker.Stock>0)
-            { //agregar a la lista de sneaker la nueva sneaker.
-                _repositoryReservation.AddToReservation(sneaker, idReservation);
+            if (sneaker.Stock>0 && rsDto.Quantity < sneaker.Stock)
+            {
+                //Agrega la zapatilla 
+                _repositoryReservation.AddToReservation(sneaker, rsDto.ReservationId, rsDto.Quantity);
+                var reservation = _repositoryReservation.GetReservationById(rsDto.ReservationId)
+                    ?? throw new Exception ("No se encontro la reservacion"); 
 
-                var reservation = _repositoryReservation.GetReservationById(idReservation);
-                reservation.Sneakers.Add(sneaker);
-                return SneakerDto.CreateList(reservation.Sneakers);
-            }
+                
+                //Crea lista de Sneaker
+                var sneakerInReservation = reservation.ReservationSneakers.Select(rs => rs.Sneaker).ToList();
+                return SneakerDto.CreateList(sneakerInReservation);
+             }
+
             throw new Exception("No hay Stock");
+        }
+
+        public void BuyReservation (int idReservation)
+        {
+            var reservation = _repositoryReservation.GetReservationById(idReservation)
+                ?? throw new Exception("no se encontro la reservacion");
+            if(reservation.State == Reservation.ReservationState.Finalized)
+            {
+                throw new Exception("La reservacion ya esta finalizada");
+            }
+
+
+            //var sneakerInReservation = reservation.ReservationSneakers.Select(rs => rs.Sneaker).ToList();
+            foreach(var rs in reservation.ReservationSneakers)
+            {
+                var sneaker = rs.Sneaker;
+                var quantity = rs.Quantity;
+                if (sneaker.Stock < quantity)
+                {
+                    throw new Exception($"No hay suficiente stock de la Zapatilla {sneaker.Name}");
+                }
+                sneaker.Stock -= quantity;
+                //Disminuye el stock de la zapatilla
+                _repositorySneaker.Update(sneaker);
+            }
+            _repositoryReservation.FinalizedReservation(reservation);
+
         }
 
 

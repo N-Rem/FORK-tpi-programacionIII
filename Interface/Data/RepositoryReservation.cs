@@ -51,7 +51,7 @@ namespace Infrastructure.Data
                 throw new Exception("La reservacion esta finalizada");
             }
 
-            var reservationSneaker = reservation.ReservationSneakers.FirstOrDefault(rs => rs.Sneaker.Id);
+            var reservationSneaker = reservation.ReservationSneakers.FirstOrDefault(rs => rs.Sneaker.Id == sneaker.Id);
             if (reservationSneaker == null)
             {
                 reservation.ReservationSneakers.Add(new ReservationSneaker()

@@ -66,24 +66,27 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReservationSneaker",
+                name: "ReservationSneakers",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     ReservationId = table.Column<int>(type: "INTEGER", nullable: false),
-                    SneakersId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SneakerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservationSneaker", x => new { x.ReservationId, x.SneakersId });
+                    table.PrimaryKey("PK_ReservationSneakers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReservationSneaker_Reservations_ReservationId",
+                        name: "FK_ReservationSneakers_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ReservationSneaker_sneakers_SneakersId",
-                        column: x => x.SneakersId,
+                        name: "FK_ReservationSneakers_sneakers_SneakerId",
+                        column: x => x.SneakerId,
                         principalTable: "sneakers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -110,10 +113,10 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "EmailAddress", "Name", "Password", "Type" },
                 values: new object[,]
                 {
-                    { 1, "Ana@example.com", "Ana", "Pass1", "admin" },
-                    { 2, "delfina@example.com", "Delfina", "Pass2", "admin" },
-                    { 3, "juan.doe@example.com", "Juan", "Pass3", "client" },
-                    { 4, "vicky.sosa@example.com", "Victoria", "Pass4", "client" }
+                    { 1, "Ana@example.com", "Ana", "Pass1", "Admin" },
+                    { 2, "delfina@example.com", "Delfina", "Pass2", "Admin" },
+                    { 3, "juan.doe@example.com", "Juan", "Pass3", "Client" },
+                    { 4, "vicky.sosa@example.com", "Victoria", "Pass4", "Client" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -122,16 +125,21 @@ namespace Infrastructure.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservationSneaker_SneakersId",
-                table: "ReservationSneaker",
-                column: "SneakersId");
+                name: "IX_ReservationSneakers_ReservationId",
+                table: "ReservationSneakers",
+                column: "ReservationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservationSneakers_SneakerId",
+                table: "ReservationSneakers",
+                column: "SneakerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ReservationSneaker");
+                name: "ReservationSneakers");
 
             migrationBuilder.DropTable(
                 name: "Reservations");
