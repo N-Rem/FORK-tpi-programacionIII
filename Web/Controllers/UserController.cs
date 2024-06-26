@@ -1,15 +1,18 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using Application.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
     //DataAnnotation Configuran el enrutamiento y el comportamiento de los métodos en una API de ASP.NET Core.
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         public readonly IUserServices _userServices;
@@ -22,36 +25,58 @@ namespace Web.Controllers
         [HttpGet("/users")]
         public IActionResult GetUser()
         {
+            //int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_userServices.GetUsers());
         }
 
         [HttpGet("/admin")]
         public IActionResult GetAdmin()
         {
+            //int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_userServices.GetAdmins());
         }
 
         [HttpGet("/client")]
         public IActionResult GetClient()
         {
+            //int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_userServices.GetClients());
         }
 
-        [HttpGet("/AllReservationUser{idUser}")]
-        public IActionResult GetAllReservationUser([FromRoute]int idUser)
+        [HttpGet("/AllReservationUser")]
+        public IActionResult GetAllReservationUser()
         {
-            return Ok(_userServices.GetAllReservationUser(idUser));
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Client")
+                return Forbid();
+            return Ok(_userServices.GetAllReservationUser(userId));
         } 
 
         [HttpGet("/userbyid{id}")]
         public IActionResult GetUserById([FromRoute] int id)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_userServices.GetById(id));
         }
 
         [HttpPost("/Admin")]
         public IActionResult CreateAdmin([FromBody] UserCreateRequest admin)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             _userServices.CreateAdmin(admin);
             return Ok();
         }

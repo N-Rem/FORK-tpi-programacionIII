@@ -61,7 +61,6 @@ namespace Infrastructure.Data
             throw new Exception("no se puede reservar dos veces la misma zapatilla");
             }
 
-
         }
 
         public void FinalizedReservation(Reservation reservation)

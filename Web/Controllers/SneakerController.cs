@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -11,6 +12,7 @@ namespace Web.Controllers
         private readonly ISneakerServices _senakerServices;
         public SneakerController(ISneakerServices senakerServices)
         {
+
             _senakerServices = senakerServices;
         }
 
@@ -40,12 +42,18 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Cretate(SneakerDto sneakerDto)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_senakerServices.Create(sneakerDto));
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] SneakerDto sneakerDto, [FromQuery] int idSneaker)
+        [HttpPut("updateSneaker{idSneaker}")]
+        public IActionResult Update([FromBody] SneakerDto sneakerDto, [FromRoute] int idSneaker)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             _senakerServices.Update(sneakerDto, idSneaker);
             return Ok();
         }
@@ -53,6 +61,9 @@ namespace Web.Controllers
         [HttpPut("buySneakers {idReservation}")]
         public IActionResult BuySneakers([FromRoute] int idReservation)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Client")
+                return Forbid();
             _senakerServices.BuySneakers(idReservation);
             return Ok();
         }
@@ -60,6 +71,9 @@ namespace Web.Controllers
         [HttpDelete("delete{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             _senakerServices.DeleteById(id);
             return Ok();
         }

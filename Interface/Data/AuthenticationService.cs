@@ -31,8 +31,7 @@ namespace Infrastructure.Data
             
             if (user == null) return null;
 
-              if(user.Type == User.UserType.Visitor
-                || user.Type == User.UserType.Client
+              if(user.Type == User.UserType.Client
                 || user.Type == User.UserType.Admin)
                 {
                 if(user.Password == authenticationRequest.Password) return user;
