@@ -13,5 +13,6 @@ namespace Domain.Entities
         public Reservation Reservation { get; set; }
         public int SneakerId { get; set; }
         public Sneaker Sneaker { get; set; }
+        public int Quantity { get; set; }
     }
 }
