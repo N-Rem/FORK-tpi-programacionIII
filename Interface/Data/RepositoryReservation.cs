@@ -28,7 +28,7 @@ namespace Infrastructure.Data
         
         public ICollection<Reservation>? GetAllReservation()
         {
-            var listReservation = _context.Reservations.Include(r => r.Sneakers).ToList()
+            var listReservation = _context.Reservations.Include(r => r.ReservationSneakers).ThenInclude(rs=>rs.Sneaker).ToList()
             ?? throw new Exception("no se econtraron Reservasiones");
 
             return listReservation;
@@ -36,30 +36,37 @@ namespace Infrastructure.Data
 
         public Reservation? GetReservationById(int id)
         {
-            return _context.Reservations.Include(r=>r.Sneakers).FirstOrDefault(r => r.Id == id);
+            return _context.Reservations.Include(r=>r.ReservationSneakers).ThenInclude(rs => rs.Sneaker).FirstOrDefault(r => r.Id == id);
         }
 
 
-        public void AddToReservation(Sneaker sneaker, int reservationId)
+        public void AddToReservation(Sneaker sneaker, int reservationId, int quantity )
         {
             
-            var reservation = _context.Reservations.FirstOrDefault(r => r.Id == reservationId)           
+            var reservation = _context.Reservations.Include(r=>r.ReservationSneakers).FirstOrDefault(r => r.Id == reservationId)           
                 ??throw new Exception("no se encontro la Reservation");
            
             if (reservation.State == Reservation.ReservationState.Finalized)
             {
                 throw new Exception("La reservacion esta finalizada");
             }
-            var snsekerDuplicate = reservation.Sneakers.FirstOrDefault(s => s.Id == sneaker.Id);
-            if (snsekerDuplicate == null)
+
+            var reservationSneaker = reservation.ReservationSneakers.FirstOrDefault(rs => rs.Sneaker.Id == sneaker.Id);
+            if (reservationSneaker == null)
             {
-            reservation.Sneakers.Add(sneaker);
-            _context.SaveChanges();
+                reservation.ReservationSneakers.Add(new ReservationSneaker()
+                {
+                    ReservationId = reservationId,
+                    SneakerId = sneaker.Id,
+                    Quantity = quantity
+                });
             }
             else
             {
-            throw new Exception("no se puede reservar dos veces la misma zapatilla");
+                reservationSneaker.Quantity += quantity;
             }
+            _context.SaveChanges();
+            
 
         }
 

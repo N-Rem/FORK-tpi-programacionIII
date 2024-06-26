@@ -58,16 +58,6 @@ namespace Web.Controllers
             return Ok();
         }
 
-        [HttpPut("buySneakers {idReservation}")]
-        public IActionResult BuySneakers([FromRoute] int idReservation)
-        {
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-            if (userRole != "Client")
-                return Forbid();
-            _senakerServices.BuySneakers(idReservation);
-            return Ok();
-        }
-
         [HttpDelete("delete{id}")]
         public IActionResult Delete([FromRoute] int id)
         {

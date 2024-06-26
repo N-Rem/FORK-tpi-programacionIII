@@ -15,6 +15,7 @@ namespace Infrastructure.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Sneaker> sneakers { get; set; }
+        public DbSet<ReservationSneaker> ReservationSneakers { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -26,17 +27,27 @@ namespace Infrastructure.Data
         // y establecer sus relaciones, conversiones (el enum a cadena) y datos iniciales (Seed Data).
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Cardinalidad, Relación muchos a muchos entre Reservation y Sneaker 
-            modelBuilder.Entity<Reservation>()
-                .HasMany(x => x.Sneakers)
-                .WithMany();
+            //Tabla intermedia para que se puedan duplicar las zapatillas en las reservaciones
+            modelBuilder.Entity<ReservationSneaker>()
+                .HasKey(rs => rs.Id);
+            //reservationsenaker tiene una reservacion, esta tiene muchas reservationsneaker con una HasForeignKey ... 
+            modelBuilder.Entity<ReservationSneaker>()
+                .HasOne(rs => rs.Reservation)
+                .WithMany(r => r.ReservationSneakers)
+                .HasForeignKey(rs => rs.ReservationId);
+            modelBuilder.Entity<ReservationSneaker>()
+                .HasOne(rs => rs.Sneaker)
+                .WithMany(s => s.ReservationSneakers)
+                .HasForeignKey(s => s.SneakerId);
 
-            // Relación uno a muchos entre Reservation y User
+
+            //Cardinalidad, Relación uno a muchos entre Reservation y usuario 
             modelBuilder.Entity<Reservation>()
-                //de uno a muchos, user puede tener muchas reservaciones
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reservations)
                 .HasForeignKey(r => r.IdUser);
+
+         
 
             //has many: Tiene muchos --has one: tiene uno -- whith many: con muchos -- has foreignkey: tiene una Fkey
 

@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.Requests;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Application.Interfaces
         List<ReservationDto> GetAll();
         ReservationDto GetById(int id);
         void FinalizedReservation(int id);
-        List<SneakerDto>? AddToReservation(int idSneaker, int idReservation);
+        List<SneakerDto>? AddToReservation(ReservationSneakerRequest rsDto);
+        void BuyReservation(int idReservation);
     }
 }

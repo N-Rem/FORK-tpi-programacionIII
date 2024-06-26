@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Domain.Entities.Reservation;
 using System.Text.Json.Serialization;
+using Domain.Interface;
 
 namespace Application.Models
 {
@@ -36,15 +37,18 @@ namespace Application.Models
             dto.User = UserDto.Create(reservation.User);
 
 
-            //if (reservation.Sneakers != null)
-            //{
-            //    foreach (var sneaker in reservation.Sneakers)
-            //    {
-            //        //!Null REFERNCIA 
-            //        dto.Sneakers.Add(SneakerDto.Create(sneaker));
-            //    }
-            //}
-            dto.Sneakers=SneakerDto.CreateList(reservation.Sneakers);
+            var listSneaker = new List<Sneaker>();
+            foreach (var rs in reservation.ReservationSneakers)
+            {
+                for(int i = 1; i <= rs.Quantity; i++)
+                {
+                    listSneaker.Add(rs.Sneaker);
+
+                } 
+            }
+
+
+            dto.Sneakers = SneakerDto.CreateList(listSneaker);
             return dto;
         }
 

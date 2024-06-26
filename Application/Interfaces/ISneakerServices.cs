@@ -19,8 +19,6 @@ namespace Application.Interfaces
 
         List<SneakerDto> GetByBrand(string brand);
         List<SneakerDto> GetByCategory(string category);
-        void Buy(int id);
-        void BuySneakers(int idReservation);
-
+       
     }
 }

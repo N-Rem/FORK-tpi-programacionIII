@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240626034040_UpdateTypes")]
-    partial class UpdateTypes
+    [Migration("20240626063924_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,30 @@ namespace Infrastructure.Migrations
                     b.HasIndex("IdUser");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ReservationSneaker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SneakerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
+
+                    b.HasIndex("SneakerId");
+
+                    b.ToTable("ReservationSneakers");
                 });
 
             modelBuilder.Entity("Domain.Entities.Sneaker", b =>
@@ -213,21 +237,6 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ReservationSneaker", b =>
-                {
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SneakersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReservationId", "SneakersId");
-
-                    b.HasIndex("SneakersId");
-
-                    b.ToTable("ReservationSneaker");
-                });
-
             modelBuilder.Entity("Domain.Entities.Reservation", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -239,19 +248,33 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ReservationSneaker", b =>
+            modelBuilder.Entity("Domain.Entities.ReservationSneaker", b =>
                 {
-                    b.HasOne("Domain.Entities.Reservation", null)
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Reservation", "Reservation")
+                        .WithMany("ReservationSneakers")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Sneaker", null)
-                        .WithMany()
-                        .HasForeignKey("SneakersId")
+                    b.HasOne("Domain.Entities.Sneaker", "Sneaker")
+                        .WithMany("ReservationSneakers")
+                        .HasForeignKey("SneakerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Sneaker");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Reservation", b =>
+                {
+                    b.Navigation("ReservationSneakers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sneaker", b =>
+                {
+                    b.Navigation("ReservationSneakers");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

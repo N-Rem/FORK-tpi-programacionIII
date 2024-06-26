@@ -20,7 +20,7 @@ namespace Infrastructure.Data
         public ICollection<Reservation>? GetAllReservationUser(int idUser)
         {
             //se cambia la manerea de traer la lista de todas las reservaciones del usuario. 
-            var reservations = _context.Reservations.Where(r => r.IdUser == idUser).ToList()
+            var reservations = _context.Reservations.Include(r=>r.ReservationSneakers).ThenInclude(rs => rs.Sneaker).Where(r => r.IdUser == idUser).ToList()
                  ?? throw new Exception("No se encontro reservas del usuario");
             return reservations;
         }

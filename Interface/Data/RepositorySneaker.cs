@@ -28,10 +28,5 @@ namespace Infrastructure.Data
                 .ToList(); 
         }
 
-        public void Buy(Sneaker sneaker)
-        {
-            sneaker.Stock = sneaker.Stock - 1;
-            _context.SaveChanges();
-        }
     }
 }
