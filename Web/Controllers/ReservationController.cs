@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using System.Security.Claims;
+
 namespace Web.Controllers
 {
     [Route("api/[controller]")]
@@ -21,18 +23,32 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            //--Solo el admin puede usar el getall--
+            //int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_reservationService.GetAll());
         }
         [HttpGet("GetById{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
+            //Solo puede acceder el admin
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Admin")
+                return Forbid();
             return Ok(_reservationService.GetById(id));
         }
 
-        [HttpPost]
-        public IActionResult Create([FromQuery] int idUser)
+        [HttpPost("CreateReservation")]
+        public IActionResult Create()
         {
-            _reservationService.Create(idUser);
+            //Solo puede crear reservaciones el cliente.
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Client")
+                return Forbid();
+            _reservationService.Create(userId);
             return Ok();
         }
 
@@ -42,9 +58,13 @@ namespace Web.Controllers
             _reservationService.FinalizedReservation(id);
             return Ok();
         }
-        [HttpPut("AddSneaker{idSneaker}")]
+        [HttpPut("AddSneakerToResrevation{idSneaker}")]
         public IActionResult AddToReservation([FromRoute] int idSneaker, [FromQuery] int idReservation)
         {
+            //Solo ´puede agregar zapatillas el cliente.
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Client")
+                return Forbid();
             _reservationService.AddToReservation(idSneaker, idReservation);
             return Ok();
         }

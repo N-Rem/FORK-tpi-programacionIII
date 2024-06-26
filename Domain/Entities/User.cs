@@ -39,9 +39,8 @@ namespace Domain.Entities
 
         public enum UserType
         {
-            Visitor,
-            Admin,
             Client,
+            Admin,
         }
     }
 }
