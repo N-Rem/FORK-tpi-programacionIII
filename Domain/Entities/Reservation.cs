@@ -17,9 +17,9 @@ namespace Domain.Entities
 
         public ReservationState State { get; set; }
 
-        //de uno a muchos
+        //Tabla intermedia.
         //[Required]
-        public ICollection<Sneaker> Sneakers { get; set; } = new List<Sneaker>();
+        public ICollection<ReservationSneaker> ReservationSneakers { get; set; } = new List<Sneaker>();
 
         [Required]
         [ForeignKey("IdUser")]

@@ -50,16 +50,10 @@ namespace Infrastructure.Data
             {
                 throw new Exception("La reservacion esta finalizada");
             }
-            var snsekerDuplicate = reservation.Sneakers.FirstOrDefault(s => s.Id == sneaker.Id);
-            if (snsekerDuplicate == null)
-            {
+            
             reservation.Sneakers.Add(sneaker);
             _context.SaveChanges();
-            }
-            else
-            {
-            throw new Exception("no se puede reservar dos veces la misma zapatilla");
-            }
+            
 
         }
 
