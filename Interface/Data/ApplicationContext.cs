@@ -49,7 +49,7 @@ namespace Infrastructure.Data
 
          
 
-            //has many: Tiene muchos --has one: tiene uno -- whith many: con muchos -- has foreignkey: tiene una Fkey
+            //has many: Tiene muchos --  has one: tiene uno -- whith many: con muchos -- has foreignkey: tiene una Fkey
 
 
 

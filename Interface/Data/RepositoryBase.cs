@@ -19,11 +19,14 @@ namespace Infrastructure.Data
             _dbContext = dbContext;
         }
 
+
+        //con set<T> se accede a la lista de la base de datos definida en ApplicationContext
         public List<T> GetAll()
         {
             return _dbContext.Set<T>().ToList();
         }
 
+        // TId es otro tipo de "comodin que guarda el tipo de valor que es id
         public T? GetById<TId>(TId id)
         {
             return _dbContext.Set<T>().Find(new object[] { id });

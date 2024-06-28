@@ -9,12 +9,14 @@ using System.Text;
 using static Infrastructure.Data.AuthenticationService;
 
 //Add - Migration InitialMigration - Context ApplicationContext
+//comando para agregar una migracion inicial refiriendose al archivo exacto de contexto deseado
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen(setupAction =>
 {
-    setupAction.AddSecurityDefinition("EcommerceApiBearerAuth", new OpenApiSecurityScheme() //Esto va a permitir usar swagger con el token.
+    //Esto va a permitir usar swagger con el token.
+    setupAction.AddSecurityDefinition("EcommerceApiBearerAuth", new OpenApiSecurityScheme() 
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
@@ -35,19 +37,20 @@ builder.Services.AddSwaggerGen(setupAction =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
 
-//Se crea la base de datos
+//Inyeccion para la cracion de la base de datos, Las migraciones se ensamblan en Infraestructura
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlite(
-
 builder.Configuration["ConnectionStrings:EcommerceDBConnectionString"], b => b.MigrationsAssembly("Infrastructure")));
 
-builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntenticación que tenemos que elegir después en PostMan para pasarle el token
-    .AddJwtBearer(options => //Acá definimos la configuración de la autenticación. le decimos qué cosas queremos comprobar. La fecha de expiración se valida por defecto.
+
+//"Bearer" es el tipo de auntenticación que tenemos que elegir después en PostMan para pasarle el token
+builder.Services.AddAuthentication("Bearer")
+    //Acá definimos la configuración de la autenticación. le decimos qué cosas queremos comprobar. La fecha de expiración se valida por defecto.
+    .AddJwtBearer(options => 
     {
         options.TokenValidationParameters = new()
         {

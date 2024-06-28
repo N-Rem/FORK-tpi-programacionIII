@@ -27,12 +27,12 @@ namespace Infrastructure.Data
             if (string.IsNullOrEmpty(authenticationRequest.Email) || string.IsNullOrEmpty(authenticationRequest.Password))
                 return null;
 
+            //Me busca por email al objeto usuario. 
             var user = _repositoryUser.GetByEmail(authenticationRequest.Email);
             
             if (user == null) return null;
 
-              if(user.Type == User.UserType.Client
-                || user.Type == User.UserType.Admin)
+              if(user.Type == User.UserType.Client || user.Type == User.UserType.Admin)
                 {
                 if(user.Password == authenticationRequest.Password) return user;
                 }
@@ -42,6 +42,7 @@ namespace Infrastructure.Data
 
         public string Authenticate(AuthenticationRequest authenticationRequest)
         {
+            //se fija si existe el usuario que se intenta autenticar y se comprueva mail y pass
             var user = ValidateUser(authenticationRequest);
                 
             if (user == null)
@@ -49,8 +50,10 @@ namespace Infrastructure.Data
                 throw new Exception("no encontrado");
             }
 
+            //El secret se guarda en una variable. 
             var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.SecretForKey));
 
+            //El secret se hashea.
             var credentials = new SigningCredentials(securityPassword, SecurityAlgorithms.HmacSha256);
 
             var claimsForToken = new List<Claim>();
@@ -58,6 +61,7 @@ namespace Infrastructure.Data
             claimsForToken.Add(new Claim("given_name", user.Name));
             claimsForToken.Add(new Claim("role", user.Type.ToString() ?? UserType.Admin.ToString()));
 
+            //Se crea el Jwt
             var jwtSecurityToken = new JwtSecurityToken(
               _options.Issuer,
               _options.Audience,
@@ -69,6 +73,7 @@ namespace Infrastructure.Data
             var tokenToReturn = new JwtSecurityTokenHandler()
                 .WriteToken(jwtSecurityToken);
 
+            //Se retorna el Jwt como string
             return tokenToReturn.ToString();
         }
 
