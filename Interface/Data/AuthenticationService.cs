@@ -56,20 +56,22 @@ namespace Infrastructure.Data
             //El secret se hashea.
             var credentials = new SigningCredentials(securityPassword, SecurityAlgorithms.HmacSha256);
 
+            //Se crea el Claim
             var claimsForToken = new List<Claim>();
             claimsForToken.Add(new Claim("sub", user.Id.ToString()));
             claimsForToken.Add(new Claim("given_name", user.Name));
             claimsForToken.Add(new Claim("role", user.Type.ToString() ?? UserType.Admin.ToString()));
 
-            //Se crea el Jwt
+            //Se crea el JWT de seguridad con el objeto JwtSecurityToken.
             var jwtSecurityToken = new JwtSecurityToken(
-              _options.Issuer,
-              _options.Audience,
-              claimsForToken,
-              DateTime.UtcNow,
-              DateTime.UtcNow.AddHours(1),
-              credentials);
+              _options.Issuer, //Quien creeo el token
+              _options.Audience, //A quien va dirigido
+              claimsForToken, //el Claims que tiene Id, nombre, y tipo de usuario
+              DateTime.UtcNow, //Fecha de creacion
+              DateTime.UtcNow.AddHours(1), //se acalara cuanto va a vivir el token, fecha de expiracion.
+              credentials); //El secreto hasheado. 
 
+            //Se crea el token de seguridad con el jwt a trabez del objeto JwtSecurityTokenHandler
             var tokenToReturn = new JwtSecurityTokenHandler()
                 .WriteToken(jwtSecurityToken);
 
@@ -81,7 +83,7 @@ namespace Infrastructure.Data
         {
             public const string AuthenticationService = "AuthenticationService";
 
-            public string Issuer { get; set; }
+            public string Issuer { get; set; } 
             public string Audience { get; set; }
             public string SecretForKey { get; set; }
         }
